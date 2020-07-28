@@ -1,5 +1,6 @@
 package kr.ac.kpu.kingstagram
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bottom_navigation.setOnNavigationItemSelectedListener(this)
+
     }
 
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
