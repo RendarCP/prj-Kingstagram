@@ -11,6 +11,11 @@
         android:enabled="true"
         android:title="Search"/>
     <item
+        android:id="@+id/action_post"
+        android:icon="@drawable/ic_baseline_add_circle_outline_24"
+        android:enabled="true"
+        android:title="post"/>
+    <item
         android:id="@+id/action_profile"
         android:icon="@drawable/ic_baseline_person_24"
         android:enabled="true"
