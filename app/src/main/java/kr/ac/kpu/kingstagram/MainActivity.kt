@@ -30,6 +30,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 supportFragmentManager.beginTransaction().replace(R.id.main_content,searchFragment).commit()
                 return true
             }
+            R.id.action_post -> {
+                var intent = Intent(this,CamerActivity::class.java)
+                startActivity(intent)
+            }
             R.id.action_profile -> {
                 val userFragment = UserFragment()
                 supportFragmentManager.beginTransaction().replace(R.id.main_content,userFragment).commit()

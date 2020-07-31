@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "254198060662",
+    "firebase_url": "https://kingstagram-681ed.firebaseio.com",
+    "project_id": "kingstagram-681ed",
+    "storage_bucket": "kingstagram-681ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254198060662:android:35ae207b98f04b49983157",
+        "android_client_info": {
+          "package_name": "kr.ac.kpu.kingstagram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254198060662-bqidio8491q1lqr79mee4nu8tu6ri8gk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kr.ac.kpu.kingstagram",
+            "certificate_hash": "f8aa4e3e0dba19b74564c0244474360854cc0bff"
+          }
+        },
+        {
+          "client_id": "254198060662-idv2fp6kpkrkvtltsr22384uicrceg8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDp_FA1seOZvFn1WQoTxYwHJ2ttj4o0eho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254198060662-idv2fp6kpkrkvtltsr22384uicrceg8b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
