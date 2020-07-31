@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_camera.*
 import java.util.*
 
 
-class CamerActivity : AppCompatActivity() {
+class CameraActivity : AppCompatActivity() {
     companion object {
         var imageUrl: String? = null
     }

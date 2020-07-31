@@ -18,9 +18,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ProfileActivity"></activity>
         <activity android:name=".EditProfileActivity" />
-        <activity android:name=".CamerActivity">
-
-        </activity>
+        <activity android:name=".CommentsActivity"></activity>
+        <activity android:name=".CameraActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity">
         </activity>
@@ -31,6 +30,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
+
 
 </manifest>
