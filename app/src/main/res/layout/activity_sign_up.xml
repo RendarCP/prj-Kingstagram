@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="패스워드를 다시 입력해주세요"
-            android:inputType="text" />
+            android:inputType="textPassword" />
 
         <EditText
             android:id="@+id/EnterEmail"
@@ -62,5 +62,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp" />
-
 </LinearLayout>
+
