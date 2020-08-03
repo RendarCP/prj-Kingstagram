@@ -1,6 +1,5 @@
 package kr.ac.kpu.kingstagram
 
-import android.graphics.drawable.Drawable
 import com.google.firebase.Timestamp
 import java.util.*
 import kotlin.collections.ArrayList
@@ -28,13 +27,20 @@ class PostView() {
         this.uid = ""
         this.userId = ""
     }
-    constructor(comments: Map<String, String>, content: String, image: String, like: Int, kings: Map<String, Boolean>, tag: ArrayList<String>, timestamp: Timestamp, uid: String, userId: String) : this() {
-        this.comments = comments
+    constructor(comments: Map<String, String>?, content: String, image: String, like: Int, kings: Map<String, Boolean>?, tag: ArrayList<String>?, timestamp: Timestamp, uid: String, userId: String) : this() {
+        if (comments != null) {
+            this.comments.plus(comments)
+        }
         this.content =content
         this.imageUrl = image
-        this.kings = kings
+        if (kings != null) {
+            this.kings.plus(kings)
+        }
         this.like = like
-        this.tag = tag
+        if (tag != null) {
+            for (i in tag)
+            this.tag.add(i)
+        }
         this.timestamp = timestamp
         this.uid = uid
         this.userId = userId

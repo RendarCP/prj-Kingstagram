@@ -2,15 +2,9 @@ package kr.ac.kpu.kingstagram
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.cardview_detail.view.*
-import kotlinx.android.synthetic.main.view_comments.view.*
+import java.util.*
 
 class CommentsActivity : AppCompatActivity() {
     var firestore: FirebaseFirestore? = null
@@ -18,7 +12,9 @@ class CommentsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comments)
-    }
+
+        PostView(null, "123", "123", 2, null, null, Timestamp(Date()), "123", "123")
+        }
 
   /*  inner class CommentsViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         var contentList : ArrayList<PostView> = arrayListOf()
