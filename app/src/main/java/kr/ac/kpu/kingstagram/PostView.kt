@@ -19,6 +19,7 @@ class PostView() {
     var userId: String
 
     init{
+        this.comments = comments
         this.content = ""
         this.imageUrl = ""
         this.like = 0

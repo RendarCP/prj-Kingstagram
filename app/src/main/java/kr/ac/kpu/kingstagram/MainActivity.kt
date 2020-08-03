@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 return true
             }
             R.id.action_post -> {
-                var intent = Intent(this,CamerActivity::class.java)
+                var intent = Intent(this,CameraActivity::class.java)
                 startActivity(intent)
             }
             R.id.action_profile -> {

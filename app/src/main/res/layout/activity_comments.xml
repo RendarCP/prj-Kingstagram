@@ -13,12 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:text="닉네임"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_constraintBottom_toTopOf="@+id/comments_view_detail_contentView"
-        android:layout_constraintStart_toStartOf="parent"
-        android:layout_constraintTop_toBottomOf="@id/comments_view_detail_kingView" />
+        tools:layout_editor_absoluteX="8dp" />
 
     <TextView
         android:id="@+id/comments_view_detail_contentView"
@@ -27,10 +24,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="내용"
-        android:layout_constraintBottom_toTopOf="@id/comments_view_detail_tagView"
-        android:layout_constraintStart_toStartOf="parent"
-        android:layout_constraintTop_toBottomOf="@+id/comments_view_detail_titleView"
-        android:layout_constraintVertical_bias="0.102" />
+         />
 
     <TextView
         android:id="@+id/comments_view_detail_tagView"
@@ -38,10 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="해시태그"
-        android:layout_constraintBottom_toTopOf="@id/comments_view_detail_commentsView"
-        android:layout_constraintStart_toStartOf="parent"
-        android:layout_constraintTop_toBottomOf="@+id/comments_view_detail_contentView"
-        android:layout_constraintVertical_bias="0.102" />
+         />
 
     <TextView
         android:id="@+id/comments_view_detail_timeView"
@@ -50,10 +41,16 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         android:text="시간"
-        android:layout_constraintBottom_toTopOf="@id/recycleView_comments"
-        android:layout_constraintStart_toStartOf="parent"
-        android:layout_constraintTop_toBottomOf="@+id/comments_view_detail_tagView"
-        android:layout_constraintVertical_bias="0.102" />
+         />
+
+    <EditText
+        android:id="@+id/comments_view_detail_editView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="여기에 댓글 쓰기..."
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView_comments"
@@ -61,9 +58,6 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="64dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comments_view_detail_timeView" />
+         />
 
 </LinearLayout>

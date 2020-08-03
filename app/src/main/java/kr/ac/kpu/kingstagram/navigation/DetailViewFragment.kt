@@ -60,15 +60,9 @@ class DetailViewFragment : Fragment() {
                 ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     contentList.clear()
                     contentUidList.clear()
-                    Log.d("MyTag","${querySnapshot!!.documents}")
-                    println(querySnapshot.documents.toString())
                     for(snapshot in querySnapshot!!.documents){
-                        Log.d("MyTag","${snapshot.data}")
-                        println(snapshot.data.toString())
                         var item = snapshot.toObject(PostView::class.java)
                         contentList.add(item!!)
-                        Log.d("MyTag","$item")
-                        println(item.toString())
                         /*var content: String = "${snapshot.data?.get("content")}"
                         var imageUrl: String = "${snapshot.data?.get("imageUrl")}"
                         var kingcount: Int = "${snapshot.data?.get("kingcount")}".toInt()
