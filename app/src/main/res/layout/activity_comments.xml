@@ -42,15 +42,29 @@
         android:layout_marginBottom="8dp"
         android:text="시간"
          />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
 
     <EditText
         android:id="@+id/comments_view_detail_editView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:hint="여기에 댓글 쓰기..."
         />
+
+        <Button
+            android:id="@+id/comments_view_detail_editBtn"
+            android:text="등록"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:layout_marginEnd="8dp"/>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView_comments"
