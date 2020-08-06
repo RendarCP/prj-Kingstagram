@@ -84,7 +84,7 @@ class CommentsActivity : AppCompatActivity() {
                     //Log.d("MyTag","${querySnapshot!!.documents}")
                     //println(querySnapshot.documents.toString())
                     for (snapshot in querySnapshot!!.documents) {
-                        Log.w("11111111111","xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ${snapshot?.id}")
+                        Log.w("Comment TAG"," ${snapshot?.id}")
                         if(snapshot?.id == postUid){
                             var commentsMap: HashMap<String, String> = snapshot.data?.get("comments") as HashMap<String, String>
                             for (i in commentsMap.keys){

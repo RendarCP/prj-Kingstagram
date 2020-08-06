@@ -19,6 +19,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -142,13 +143,14 @@ class CameraActivity : AppCompatActivity() {
         val contents: String? = null,
         val tag: ArrayList<String> = arrayListOf(),
         val like: Int = 0,
+        val uid: String? = null,
         val userId: String? = null,
-        //val kings: Map<String, Boolean> = HashMap(),
-        val kings: String? = null,
+        val kings: Map<String, Boolean>,
+        //val kings: String? = null,
         val imageUrl: String? = null,
-        val date: String? = null,
-        //val commnets: Map<String, String> = HashMap()
-        val comments: String? = null
+        val date: Timestamp ,
+        val comments: Map<String, String>
+        //val comments: String? = null
     )
 
     fun savePost(filepath:Uri?){
@@ -172,7 +174,7 @@ class CameraActivity : AppCompatActivity() {
                     //Toast.makeText(this, "${downloadUri}", Toast.LENGTH_SHORT).show()
                     if(downloadUri != null){
                         val post = PostSchema(editContents.text.toString(), arrayListOf(editTag.text.toString()), 0,
-                            "${Firebase.auth?.currentUser}", null ,"${downloadUri}", "${LocalDate.now()}",null)
+                            "${Firebase.auth?.currentUser}", "", HashMap() ,"${downloadUri}", Timestamp(Date()), HashMap())
                         db.collection("posts")
                             .add(post)
                             .addOnSuccessListener {

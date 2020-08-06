@@ -76,6 +76,7 @@ class DetailViewFragment : Fragment() {
                         var uid : String = snapshot.id
                         var userId: String = "${snapshot.data?.get("userId")}"
                         contentList.add(PostView(content, imageUrl, kingcount, uid, userId))*/
+
                         contentUidList.add(snapshot.id)
                     }
                     notifyDataSetChanged()
