@@ -5,18 +5,53 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 import kr.ac.kpu.kingstagram.navigation.DetailViewFragment
 import kr.ac.kpu.kingstagram.navigation.SearchFragment
 import kr.ac.kpu.kingstagram.navigation.UserFragment
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+    var firestore: FirebaseFirestore? = null
+    var toCameraUid: String = ""
+    var toCameraNickName: String = ""
+    var toProfileImageUrl: String = ""
+    var toProfilePostNumber = 0
+    var toProfileFollower: ArrayList<String> = arrayListOf()
+    var toProfileFollowing: ArrayList<String> = arrayListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        bottom_navigation.setOnNavigationItemSelectedListener(this)
+        firestore = FirebaseFirestore.getInstance()
 
+        bottom_navigation.setOnNavigationItemSelectedListener(this)
         bottom_navigation.selectedItemId = R.id.action_home
+
+        val user = Firebase.auth.currentUser
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("users").document("${user?.uid}")
+            .get()
+            .addOnSuccessListener { result ->
+                //if (result.id == "name") {
+                //Toast.makeText(this.context,"${result.data?.get("name")}",Toast.LENGTH_LONG)
+                toCameraUid = "${user?.uid}"
+                toCameraNickName = "${result.data?.get("nickName")}"
+                /*toProfileImageUrl = "${result.data?.get("imageUrl")}"
+                toProfilePostNumber = result.data?.get("postNumber") as Int
+                toProfileFollower = result.data?.get("follower") as ArrayList<String>
+                toProfileFollowing = result.data?.get("following") as ArrayList<String>*/
+
+
+                //Log.w("TAG", "${result}")
+            }
+            .addOnFailureListener { exception ->
+                //Log.w(TAG, "Error getting documents.", exception)
+            }
+
 
     }
 
@@ -34,6 +69,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
             R.id.action_post -> {
                 var intent = Intent(this,CameraActivity::class.java)
+                intent.putExtra("uid", toCameraUid)
+                intent.putExtra("nickName",toCameraNickName)
                 startActivity(intent)
             }
             R.id.action_profile -> {

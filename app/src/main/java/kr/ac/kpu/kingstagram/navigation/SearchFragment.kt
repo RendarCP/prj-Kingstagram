@@ -1,10 +1,14 @@
 package kr.ac.kpu.kingstagram.navigation
 
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,15 +16,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.cardview_detail.view.*
-import kotlinx.android.synthetic.main.fragment_detail.view.*
-import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
 import kotlinx.android.synthetic.main.view_search.view.*
 import kotlinx.android.synthetic.main.view_search.view.img_search
-import kr.ac.kpu.kingstagram.*
+import kr.ac.kpu.kingstagram.R
+import kr.ac.kpu.kingstagram.SearchProfileActivity
+import kr.ac.kpu.kingstagram.SearchView
+
 
 class SearchFragment : Fragment() {
     var firestore: FirebaseFirestore? = null
@@ -44,7 +47,20 @@ class SearchFragment : Fragment() {
             else
                 view.img_search.setImageResource(R.drawable.ic_baseline_search_24)
         }
+
         view.img_search.setOnClickListener {
+            if(view.edit_search.isFocused){
+                view.edit_search.clearFocus()
+                view.img_search.setImageResource(R.drawable.ic_baseline_search_24)
+                val imm = this.context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow( view.edit_search.windowToken, 0)
+            } else {
+                view.edit_search.requestFocus()
+                view.img_search.setImageResource(R.drawable.ic_baseline_keyboard_backspace_24)
+                val imm = this.context?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+            }
+            //view.edit_search.isFocusable = view.edit_search.isFocusable != true
 
         }
 
@@ -66,12 +82,6 @@ class SearchFragment : Fragment() {
                         val name: String = snapshot.data?.get("name") as String
                         val nickname: String = snapshot.data?.get("nickName") as String
                         contentList.add(SearchView(imgUrl,nickname,name))
-                        /*var content: String = "${snapshot.data?.get("content")}"
-                        var imageUrl: String = "${snapshot.data?.get("imageUrl")}"
-                        var kingcount: Int = "${snapshot.data?.get("kingcount")}".toInt()
-                        var uid : String = snapshot.id
-                        var userId: String = "${snapshot.data?.get("userId")}"
-                        contentList.add(PostView(content, imageUrl, kingcount, uid, userId))*/
 
                         contentUidList.add(snapshot.id)
                     }
@@ -97,25 +107,24 @@ class SearchFragment : Fragment() {
 
             viewholder.nickname_search.text = contentList!![p1].nickname
 
-            if(contentList!![p1].profile_url == ""){
+            if(contentList!![p1].profileUrl == ""){
                 viewholder.img_search.setImageResource(R.drawable.account_iv_profile)
 
             }else {
-                Glide.with(p0.itemView.context).load(contentList!![p1].profile_url)
+                Glide.with(p0.itemView.context).load(contentList!![p1].profileUrl)
                     .into(viewholder.img_search)
             }
 
             viewholder.name_search.text = contentList!![p1].name
 
 
-            /*viewholder.setOnClickListener {
+            viewholder.setOnClickListener {
                 println("${contentUidList!![p1]}")
                 var intent = Intent(context, SearchProfileActivity::class.java)
                 intent.putExtra("uid", contentUidList!![p1])
                 //intent.putExtra("comments", contentList!![p1].comments as HashMap<String, String>)
                 startActivity(intent)
-
-            }*/
+            }
 
         }
 
