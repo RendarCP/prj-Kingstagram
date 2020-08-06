@@ -13,7 +13,7 @@ class PostView() {
     var like: Int
     var kings: Map<String, Boolean> = HashMap()
     var tag: ArrayList<String> = arrayListOf()
-    var timestamp: Timestamp
+    var date: Timestamp
     var uid : String
     var userId: String
 
@@ -23,7 +23,7 @@ class PostView() {
         this.imageUrl = ""
         this.like = 0
         this.kings = kings
-        this.timestamp = Timestamp(Date())
+        this.date = Timestamp(Date())
         this.uid = ""
         this.userId = ""
     }
@@ -41,7 +41,7 @@ class PostView() {
             for (i in tag)
             this.tag.add(i)
         }
-        this.timestamp = timestamp
+        this.date = timestamp
         this.uid = uid
         this.userId = userId
     }
