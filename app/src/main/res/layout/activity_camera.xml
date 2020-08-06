@@ -88,6 +88,43 @@
                 android:hint="태그를 입력해주세요"
                 android:inputType="textPersonName" />
 
+            <com.fenlisproject.hashtagedittext.HashTagEditText
+                android:id="@+id/tag_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:bubbleTextColor="#555"
+                app:bubbleTextSize="16sp"
+                app:horizontalPadding="8dp"
+                app:horizontalSpacing="2dp"
+                app:maxSize="10"
+                app:bubbleBackground="@color/colorPrimary"
+                app:verticalPadding="4dp"
+                app:verticalSpacing="2dp" />
+
+            <com.hendraanggrian.appcompat.widget.SocialEditText
+                android:id="@+id/EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="태그를 입력해주세요"
+                app:socialFlags="hashtag|mention"
+                app:hashtagColor="@color/colorPrimary"/>
+
+            <com.hendraanggrian.appcompat.widget.SocialTextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="#hashtag and @mention."
+                app:socialFlags="hashtag|mention"
+                app:hashtagColor="@color/colorPrimary" />
+
+
+            <Button
+                android:id="@+id/tagTest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="테스트"/>
+
             <Button
                 android:id="@+id/btnSave"
                 android:layout_width="match_parent"

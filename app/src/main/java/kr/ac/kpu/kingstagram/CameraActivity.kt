@@ -10,7 +10,6 @@ import android.hardware.Camera
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
@@ -28,10 +27,8 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_camera.*
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
+import java.util.regex.Pattern
 
 
 class CameraActivity : AppCompatActivity() {
@@ -60,6 +57,7 @@ class CameraActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
+
 
         firebaseStore = FirebaseStorage.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
@@ -96,6 +94,13 @@ class CameraActivity : AppCompatActivity() {
                 //system OS is < Marshmallow
                 pickImageFromGallery();
             }
+        }
+        tagTest.setOnClickListener{
+            val matchRegex = Regex("(#[0-9a-zA-Z가-힣]*)")
+            val matchResult = matchRegex.findAll(EditText.text.toString())
+            val names = matchResult.map { it.groupValues[1] }.joinToString()
+            Toast.makeText(this, "${names}", Toast.LENGTH_SHORT).show()
+            textView.text = names
         }
 
         btnSave.setOnClickListener {
