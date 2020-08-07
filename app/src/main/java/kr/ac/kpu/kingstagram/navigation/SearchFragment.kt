@@ -4,11 +4,14 @@ import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,38 +30,60 @@ import kr.ac.kpu.kingstagram.SearchView
 
 class SearchFragment : Fragment() {
     var firestore: FirebaseFirestore? = null
+    var textChanged: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = LayoutInflater.from(activity).inflate(R.layout.fragment_search,container,false)
+        val view = LayoutInflater.from(activity).inflate(R.layout.fragment_search, container, false)
         firestore = FirebaseFirestore.getInstance()
 
         view.recycleView_search.layoutManager = LinearLayoutManager(activity)
         view.recycleView_search.addItemDecoration(
-            DividerItemDecoration(this.context, LinearLayoutManager.VERTICAL))
-        view.recycleView_search.adapter = SearchViewAdapter()
+            DividerItemDecoration(this.context, LinearLayoutManager.VERTICAL)
+        )
+
+
+        view.edit_search.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                textChanged = view.edit_search.text.toString()
+                view.recycleView_search.adapter = SearchViewAdapter(textChanged)
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+        })
+
 
         view.edit_search.setOnFocusChangeListener { v, hasFocus ->
-            if(hasFocus)
+            if (hasFocus)
                 view.img_search.setImageResource(R.drawable.ic_baseline_keyboard_backspace_24)
             else
                 view.img_search.setImageResource(R.drawable.ic_baseline_search_24)
         }
 
         view.img_search.setOnClickListener {
-            if(view.edit_search.isFocused){
+            if (view.edit_search.isFocused) {
                 view.edit_search.clearFocus()
                 view.img_search.setImageResource(R.drawable.ic_baseline_search_24)
-                val imm = this.context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow( view.edit_search.windowToken, 0)
+                val imm =
+                    this.context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.edit_search.windowToken, 0)
             } else {
                 view.edit_search.requestFocus()
                 view.img_search.setImageResource(R.drawable.ic_baseline_keyboard_backspace_24)
                 val imm = this.context?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+                imm.toggleSoftInput(
+                    InputMethodManager.SHOW_FORCED,
+                    InputMethodManager.HIDE_IMPLICIT_ONLY
+                )
             }
             //view.edit_search.isFocusable = view.edit_search.isFocusable != true
 
@@ -68,7 +93,7 @@ class SearchFragment : Fragment() {
         return view
     }
 
-    inner class SearchViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    inner class SearchViewAdapter(text: String) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         var contentList: ArrayList<SearchView> = arrayListOf()
         var contentUidList: ArrayList<String> = arrayListOf()
 
@@ -81,7 +106,9 @@ class SearchFragment : Fragment() {
                         val imgUrl: String = snapshot.data?.get("imageUrl") as String
                         val name: String = snapshot.data?.get("name") as String
                         val nickname: String = snapshot.data?.get("nickName") as String
-                        contentList.add(SearchView(imgUrl,nickname,name))
+                        if (nickname.contains(text))
+                            contentList.add(SearchView(imgUrl, nickname, name))
+
 
                         contentUidList.add(snapshot.id)
                     }
@@ -107,10 +134,10 @@ class SearchFragment : Fragment() {
 
             viewholder.nickname_search.text = contentList!![p1].nickname
 
-            if(contentList!![p1].profileUrl == ""){
+            if (contentList!![p1].profileUrl == "") {
                 viewholder.img_search.setImageResource(R.drawable.account_iv_profile)
 
-            }else {
+            } else {
                 Glide.with(p0.itemView.context).load(contentList!![p1].profileUrl)
                     .into(viewholder.img_search)
             }
@@ -119,7 +146,6 @@ class SearchFragment : Fragment() {
 
 
             viewholder.setOnClickListener {
-                println("${contentUidList!![p1]}")
                 var intent = Intent(context, SearchProfileActivity::class.java)
                 intent.putExtra("uid", contentUidList!![p1])
                 //intent.putExtra("comments", contentList!![p1].comments as HashMap<String, String>)

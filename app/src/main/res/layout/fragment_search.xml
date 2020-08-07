@@ -35,9 +35,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="검색"
+                android:singleLine = "true"
+                android:lines = "1"
                 android:textColorHighlight="@color/colorPrimary"
                 android:textColorLink="@color/colorPrimary"
-                tools:layout_editor_absoluteY="0dp"
                 />
 
         </LinearLayout>
