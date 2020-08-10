@@ -2,33 +2,147 @@ package kr.ac.kpu.kingstagram
 
 import android.Manifest
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.hardware.Camera
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.*
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
+import kotlinx.android.synthetic.main.activity_camera.*
 import kotlinx.android.synthetic.main.activity_edit__profile.*
+import kotlinx.android.synthetic.main.activity_edit__profile.view.*
+import java.util.*
+
 
 class EditProfileActivity : AppCompatActivity() {
-
     private val PERMISSION_CODE = 1000
     private val IMAGE_CAPTURE_CODE = 1001
     var image_uri: Uri? = null
     val REQUEST_CODE_GET_IMAGE = 101
+    private lateinit var database: DatabaseReference
+    var db = FirebaseFirestore.getInstance()
+    private val TAG = "Firestore"
+    private var storageReference: StorageReference? = null
+    private var firebaseStore: FirebaseStorage? = null
+    private var filePath: Uri? = null
+    private var CAMERA_FACING = Camera.CameraInfo.CAMERA_FACING_BACK
+    private val mCamera: Camera? = null
+    private var myCameraPreview: MyCameraPreview? = null
+    private val PERMISSIONS_REQUEST_CODE = 100
+    private val IMAGE_PICK_CODE = 1000;
+    private val filepath = null;
+    private val REQUIRED_PERMISSIONS =
+        arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    var imageUrl: String? = null
+    val user = Firebase.auth.currentUser
+    
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit__profile)
 
+        //val user = Firebase.auth.currentUser
+        db.collection("users").document("${user?.uid}")
+            .get()
+            .addOnSuccessListener { result ->
+                edittextPersonName.setText("${result.data?.get("name")}")
+                editTextNickName.setText("${result.data?.get("nickName")}")
+            }
+            .addOnFailureListener { exception ->
+                //Log.w(TAG, "Error getting documents.", exception)
+            }
         button.setOnClickListener {
             showDialog()
+            profile_button.setOnClickListener {
+
+                profile_button.setOnClickListener {
+
+                }
+            }
+        }
+        profile_button.setOnClickListener {
+            updateData()
+            //Toast.makeText(this, "${edittextPersonName}", Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun updateData() {
+        db.collection("users").document("${user?.uid}")
+            .update("name", edittextPersonName.text.toString(),"nickName", editTextNickName.text.toString() )
+            .addOnSuccessListener { result ->
+                Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                //Log.w(TAG, "Error getting documents.", exception)
+                Toast.makeText(this, "실패", Toast.LENGTH_SHORT).show()
+            }
+
+        val db = FirebaseFirestore.getInstance()
+        if (filepath != null) {
+            val imageUrl = filepath
+            val ref = storageReference?.child("uploads/" + UUID.randomUUID().toString())
+            val uploadTask = ref?.putFile(filePath!!)
+            val urlTask =
+                uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
+                        }
+                    }
+                    return@Continuation ref.downloadUrl
+                })?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val downloadUri = task.result
+                        if (downloadUri != null) {
+
+                            db.collection("users").document("${user?.uid}")
+                                .update("name", edittextPersonName ,"nickName", editTextNickName)
+                                .addOnSuccessListener {result ->
+                                    Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show()
+                                }
+                                .addOnFailureListener { e ->
+                                    //Log.w(TAG, "Error getting documents.", exception)
+                                    Toast.makeText(this, "실패", Toast.LENGTH_SHORT).show()
+                                }
+                        }
+                    }
+                }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     private fun showDialog() {
         val arrayOf = arrayOf("엘범에서 선택", "사진촬영", "프로필 삭제")
@@ -71,6 +185,7 @@ class EditProfileActivity : AppCompatActivity() {
                         val pickGalleryImageIntent = Intent(
                             Intent.ACTION_PICK,
                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                                    image_uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
                         )
 
                         val pickTitle =
@@ -84,7 +199,7 @@ class EditProfileActivity : AppCompatActivity() {
                     }
 
                     2 -> {
-                        account_iv_profile.setImageResource(0)
+                        btnProfile1.setImageResource(0)
 
                     }
                 }
@@ -96,9 +211,6 @@ class EditProfileActivity : AppCompatActivity() {
         dialog.show()
 
     }
-
-
-
 
 
     private fun openCamera() {
@@ -141,12 +253,12 @@ class EditProfileActivity : AppCompatActivity() {
         //called when image was captured from camera intent
         if (resultCode == Activity.RESULT_OK) {
             //set image captured to image view
-            account_iv_profile.setImageURI(image_uri)
+            btnProfile1.setImageURI(image_uri)
         }
-        if(requestCode == REQUEST_CODE_GET_IMAGE){
-            account_iv_profile.setImageURI(data?.data);
+        if (requestCode == REQUEST_CODE_GET_IMAGE) {
+            btnProfile1.setImageURI(data?.data);
         }
     }
-
 }
+
 

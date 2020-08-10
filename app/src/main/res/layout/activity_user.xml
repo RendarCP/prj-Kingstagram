@@ -14,13 +14,14 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_marginRight="10dp">
-        <ImageView
-            android:id="@+id/account_iv_profile"
+
+        <ImageButton
+            android:id="@+id/btnProfile"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:contentDescription="@string/profile"
-            tools:src="@drawable/account_iv_profile"
-            android:layout_alignParentLeft="true" />
+            android:contentDescription="TODO"
+            android:src="@drawable/account_iv_profile" />
+
         <Button
             android:id="@+id/account_btn_follow_signout"
             android:layout_width="match_parent"
@@ -28,7 +29,7 @@
             android:layout_alignParentBottom="true"
             android:text="@string/follow"
             android:theme="@style/ButtonStyle"
-            android:layout_toRightOf="@id/account_iv_profile" />
+            android:layout_toRightOf="@id/btnProfile" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -39,7 +40,7 @@
             android:baselineAligned="true"
             android:gravity="center"
             android:orientation="horizontal"
-            android:layout_toRightOf="@id/account_iv_profile">
+            android:layout_toRightOf="@id/btnProfile">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -52,6 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dp"
                     android:text="@string/post" />
+
                 <TextView
                     android:id="@+id/account_tv_post_count"
                     android:layout_width="wrap_content"

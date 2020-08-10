@@ -12,15 +12,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/account_iv_profile"
+        <ImageView
+            android:id="@+id/btnProfile1"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="50dp"
             android:src="@drawable/account_iv_profile"
-            app:civ_border_width="1dp"
             tools:ignore="MissingClass" />
 
         <Button
@@ -32,7 +31,7 @@
             android:text="사진변경" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/edittextPersonName"
             android:layout_width="374dp"
             android:layout_height="43dp"
             android:layout_gravity="center"
@@ -40,23 +39,20 @@
             android:layout_marginBottom="20dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name"
             android:textSize="24sp"
             android:visibility="visible" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/editTextNickName"
             android:layout_width="373dp"
             android:layout_height="41dp"
             android:layout_gravity="center"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name"
-            android:textSize="24sp"
-            tools:text="Nickname" />
+            android:textSize="24sp" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/profile_button"
             android:layout_width="241dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
