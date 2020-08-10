@@ -10,7 +10,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/Id"
+            android:id="@+id/edit_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -18,7 +18,7 @@
             android:inputType="text" />
 
         <EditText
-            android:id="@+id/Password"
+            android:id="@+id/edit_password"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -32,24 +32,29 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/CheckPassword"
+            android:id="@+id/edit_checkPassword"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="패스워드를 다시 입력해주세요"
             android:inputType="textPassword" />
 
         <EditText
-            android:id="@+id/EnterEmail"
+            android:id="@+id/edit_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="이메일을 입력해주세요" />
 
         <EditText
-            android:id="@+id/EnterNickname"
+            android:id="@+id/edit_nickName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="닉네임을 입력해주세요" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/errorText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/Enjoy"
@@ -63,4 +68,3 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp" />
 </LinearLayout>
-
