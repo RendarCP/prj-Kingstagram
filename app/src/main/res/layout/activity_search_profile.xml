@@ -14,10 +14,12 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_marginRight="10dp">
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/account_iv_profile"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/colorPrimary"
             android:contentDescription="@string/profile"
             tools:src="@drawable/account_iv_profile"
             android:layout_alignParentLeft="true" />
@@ -104,6 +106,8 @@
         android:id="@+id/name_profile"
         android:layout_margin="8dp"
         android:text="이름"
+        android:textStyle="bold"
+        android:textColor="#000000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />

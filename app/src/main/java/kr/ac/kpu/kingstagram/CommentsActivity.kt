@@ -8,13 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_comments.*
+import kotlinx.android.synthetic.main.activity_search_profile.*
 import kotlinx.android.synthetic.main.fragment_detail.view.*
+import kotlinx.android.synthetic.main.view_comments.*
 import kotlinx.android.synthetic.main.view_comments.view.*
 import java.util.*
 import kotlin.collections.HashMap
@@ -57,9 +60,10 @@ class CommentsActivity : AppCompatActivity() {
         recycleView_comments.adapter = CommentsViewAdapter()
 
         comments_view_detail_editBtn.setOnClickListener {
+            val uid = user?.uid
             var content = comments_view_detail_editView.text.toString()
             val data = hashMapOf(
-                "comments" to mapOf(nickname to content)
+                "comments" to mapOf(uid to content)
             )
             db.collection("posts").document("$postUid")
                 .set(data, SetOptions.merge())
@@ -73,10 +77,6 @@ class CommentsActivity : AppCompatActivity() {
         var contentUidList: ArrayList<String> = arrayListOf()
 
         init {
-            /*for (i in comments?.keys!!) {
-                contentList.add(CommentView(i, comments!!.getValue(i)))
-                contentUidList.add(i)
-            }*/
             firestore?.collection("posts")//?.document("$postUid")?.collection("comments")
                 ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     contentList.clear()
@@ -92,18 +92,6 @@ class CommentsActivity : AppCompatActivity() {
                                 contentUidList.add(i)
                             }
                         }
-                            //var item = snapshot?.toObject(CommentView::class.java)
-                            //contentList.add(item!!)
-                            //Log.d("MyTag", "$item")
-                            //println(item.toString())
-                            /*var content: String = "${snapshot.data?.get("content")}"
-                        var imageUrl: String = "${snapshot.data?.get("imageUrl")}"
-                        var kingcount: Int = "${snapshot.data?.get("kingcount")}".toInt()
-                        var uid : String = snapshot.id
-                        var userId: String = "${snapshot.data?.get("userId")}"
-                        contentList.add(PostView(content, imageUrl, kingcount, uid, userId))*/
-                        //contentUidList.add(snapshot.id)
-
 
                     }
                     notifyDataSetChanged()
@@ -124,22 +112,28 @@ class CommentsActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
             var viewholder = (p0 as CustomViewHolder).itemView
+            val db = FirebaseFirestore.getInstance()
 
-            viewholder.nickname_comments.text = contentList!![p1].nickname
 
             viewholder.content_comments.text = contentList!![p1].comments
 
+            db.collection("users").document("${contentUidList!![p1]}")
+                .get()
+                .addOnSuccessListener { result ->
+                    viewholder.nickname_comments.text = result.data?.get("nickName") as String
 
-            /*
-            viewholder.card_view_detail_titleView.text = contentList!![p1].userId
+                        //Toast.makeText(this.context,"${result.data?.get("name")}",Toast.LENGTH_LONG)
+                        if (result.data?.get("imageUrl") != "") {
+                            Glide.with(p0.itemView.context).load(result.data?.get("imageUrl") as String)
+                                .into(viewholder.img_comments)
+                        }
 
-            Glide.with(p0.itemView.context).load(contentList!![p1].imageUrl).into(viewholder.card_view_detail_imageView)
 
-            viewholder.card_view_detail_contentView.text = contentList!![p1].content
-
-            viewholder.card_view_detail_kingView.text = "King  " + contentList!![p1].like + "개"
-             */
-
+                    //Log.w("TAG", "${result}")
+                }
+                .addOnFailureListener { exception ->
+                    //Log.w(TAG, "Error getting documents.", exception)
+                }
 
         }
 

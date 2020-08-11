@@ -1,11 +1,13 @@
 package kr.ac.kpu.kingstagram.navigation
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +22,8 @@ import kotlinx.android.synthetic.main.fragment_detail.view.*
 import kr.ac.kpu.kingstagram.CommentsActivity
 import kr.ac.kpu.kingstagram.PostView
 import kr.ac.kpu.kingstagram.R
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 
 class DetailViewFragment : Fragment() {
     var firestore: FirebaseFirestore? = null
@@ -94,10 +98,12 @@ class DetailViewFragment : Fragment() {
             return contentList.size
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
             var viewholder = (p0 as CustomViewHolder).itemView
             val user = Firebase.auth.currentUser
             val db = FirebaseFirestore.getInstance()
+            val dateForm = SimpleDateFormat("yyyy.MM.dd  HH:mm")
 
             viewholder.card_view_detail_titleView.text = contentList!![p1].userId
 
@@ -117,14 +123,16 @@ class DetailViewFragment : Fragment() {
 
             viewholder.card_view_detail_kingView.text = "King  " + contentList!![p1].like + "개"
 
+            viewholder.card_view_detail_timeView.text = "${dateForm.format(contentList!![p1].date.toDate())}"
+
             viewholder.card_view_detail_commentsView.text =
                 "${contentList!![p1].comments.size} 개의 댓글 모두 보기"
 
             viewholder.card_view_detail_commentsView.setOnClickListener {
                 println("${contentUidList!![p1]}")
                 var intent = Intent(context, CommentsActivity::class.java)
-                intent.putExtra("userId",contentList!![p1].userId)
-                intent.putExtra("content",contentList!![p1].content)
+                intent.putExtra("userId", contentList!![p1].userId)
+                intent.putExtra("content", contentList!![p1].content)
                 intent.putExtra("uid", contentUidList!![p1])
                 //intent.putExtra("comments", contentList!![p1].comments as HashMap<String, String>)
                 startActivity(intent)
@@ -152,7 +160,7 @@ class DetailViewFragment : Fragment() {
                         }
                     }
                 }
-                if (count == 0){
+                if (count == 0) {
                     val data = hashMapOf(
                         "kings" to mapOf("${user?.uid}" to true),
                         "like" to contentList!![p1].like + 1

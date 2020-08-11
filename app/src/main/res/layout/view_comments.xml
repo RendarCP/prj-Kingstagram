@@ -2,15 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="80dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal">
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_comments"
         android:layout_width="80dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:src="@drawable/account_iv_profile" />
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/colorPrimary"
+        android:src="@drawable/account_iv_profile"  />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,6 +30,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:textStyle="bold"
+            android:textColor="#000000"
             android:text="닉네임" />
 
         <TextView
@@ -36,6 +40,8 @@
             android:layout_weight="1.5"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
+            android:textColor="#000000"
+            android:textSize="15dp"
             android:text="내용" />
 
         <TextView
@@ -45,6 +51,7 @@
             android:layout_weight="2"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
+            android:textColor="#FFFFFF"
             android:text="시간" />
     </LinearLayout>
 

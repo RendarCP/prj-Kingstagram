@@ -1,132 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-xmlns:card_view="http://schemas.android.com/apk/res-auto"
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools" android:id="@+id/card_view"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_margin="16dp"
-card_view:cardCornerRadius="5dp"
-card_view:cardElevation="10dp">
-
-<androidx.constraintlayout.widget.ConstraintLayout
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/card_view_detail_imageView"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:adjustViewBounds="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        card_view:layout_constraintTop_toTopOf="parent"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintEnd_toEndOf="parent"
-        card_view:layout_constraintBottom_toTopOf="@id/card_view_detail_kingImg"
-        card_view:layout_constraintVertical_bias="0.5" />
-
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:id="@+id/card_view_detail_kingImg"
-        android:src="@drawable/not_king"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        card_view:layout_constraintTop_toBottomOf="@id/card_view_detail_imageView"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintBottom_toTopOf="@id/card_view_detail_kingView"
-        card_view:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/card_view_detail_kingView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="king 받은 수"
-        android:textStyle="bold"
-        card_view:layout_constraintBottom_toTopOf="@id/card_view_detail_titleView"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toBottomOf="@+id/card_view_detail_kingImg"
-        card_view:layout_constraintVertical_bias="0.102" />
-
-    <TextView
-        android:id="@+id/card_view_detail_titleView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="닉네임"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        card_view:layout_constraintBottom_toTopOf="@+id/card_view_detail_contentView"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toBottomOf="@id/card_view_detail_kingView" />
-
-    <TextView
-    android:id="@+id/card_view_detail_contentView"
-    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="8dp"
-    android:text="내용"
-    card_view:layout_constraintBottom_toTopOf="@id/card_view_detail_tagLayout"
-    card_view:layout_constraintStart_toStartOf="parent"
-    card_view:layout_constraintTop_toBottomOf="@+id/card_view_detail_titleView"
-    card_view:layout_constraintVertical_bias="0.102" />
+    android:layout_margin="16dp"
+    card_view:cardCornerRadius="5dp"
+    card_view:cardElevation="10dp">
 
-    <LinearLayout
-        android:id="@+id/card_view_detail_tagLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        card_view:layout_constraintBottom_toTopOf="@id/card_view_detail_timeView"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toBottomOf="@+id/card_view_detail_contentView"
-        card_view:layout_constraintVertical_bias="0.102"
-        >
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/card_view_detail_tagView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="해시태그"
-        card_view:layout_constraintVertical_bias="0.102" />
+        <TextView
+            android:id="@+id/card_view_detail_titleView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="닉네임"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            card_view:layout_constraintBottom_toTopOf="@id/card_view_detail_imageView"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            />
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/card_view_detail_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:adjustViewBounds="true"
+            card_view:layout_constraintBottom_toTopOf="@id/card_view_detail_kingImg"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/card_view_detail_titleView"
+            card_view:layout_constraintVertical_bias="0.5" />
+
+        <ImageView
+            android:id="@+id/card_view_detail_kingImg"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:src="@drawable/not_king"
+            card_view:layout_constraintBottom_toTopOf="@id/card_view_detail_kingView"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/card_view_detail_imageView"
+            card_view:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/card_view_detail_kingView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="king 받은 수"
+            android:textStyle="bold"
+            card_view:layout_constraintBottom_toTopOf="@id/card_view_detail_contentView"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/card_view_detail_kingImg"
+            card_view:layout_constraintVertical_bias="0.102" />
+
+        <TextView
+            android:id="@+id/card_view_detail_contentView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="내용"
+            android:textColor="#000000"
+            android:textSize="15dp"
+            card_view:layout_constraintBottom_toTopOf="@id/card_view_detail_tagLayout"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/card_view_detail_kingView"
+            card_view:layout_constraintVertical_bias="0.102" />
+
+        <LinearLayout
+            android:id="@+id/card_view_detail_tagLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            card_view:layout_constraintBottom_toTopOf="@id/card_view_detail_timeView"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/card_view_detail_contentView"
+            card_view:layout_constraintVertical_bias="0.102">
+
+            <TextView
+                android:id="@+id/card_view_detail_tagView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="해시태그"
+                card_view:layout_constraintVertical_bias="0.102" />
+
+        </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/card_view_detail_timeView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="시간"
-        card_view:layout_constraintBottom_toTopOf="@id/card_view_detail_commentsView"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toBottomOf="@+id/card_view_detail_tagLayout"
-        card_view:layout_constraintVertical_bias="0.102" />
+        <TextView
+            android:id="@+id/card_view_detail_timeView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="시간"
+            card_view:layout_constraintBottom_toTopOf="@id/card_view_detail_commentsView"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/card_view_detail_tagLayout"
+            card_view:layout_constraintVertical_bias="0.102" />
 
-    <TextView
-        android:id="@+id/card_view_detail_commentsView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="32dp"
-        android:text="댓글 모두 보기"
-        android:clickable="true"
-        card_view:layout_constraintBottom_toBottomOf="parent"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toBottomOf="@+id/card_view_detail_timeView"
-        card_view:layout_constraintVertical_bias="0.102" />
+        <TextView
+            android:id="@+id/card_view_detail_commentsView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="32dp"
+            android:clickable="true"
+            android:text="댓글 모두 보기"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/card_view_detail_timeView"
+            card_view:layout_constraintVertical_bias="0.102" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
