@@ -101,16 +101,16 @@ class DetailViewFragment : Fragment() {
 
             viewholder.card_view_detail_titleView.text = contentList!![p1].userId
 
-            Glide.with(p0.itemView.context).load(contentList!![p1].imageUrl)
-                .into(viewholder.card_view_detail_imageView)
+                Glide.with(p0.itemView.context).load(contentList!![p1].imageUrl)
+                    .into(viewholder.card_view_detail_imageView)
 
-            for (i in contentList!![p1].kings.keys) {
-                if (user?.uid == i) {
-                    if (contentList!![p1].kings[i] ?: error(""))
-                        viewholder.card_view_detail_kingImg.setImageResource(R.drawable.on_king)
-                    else
-                        viewholder.card_view_detail_kingImg.setImageResource(R.drawable.not_king)
-                }
+                for (i in contentList!![p1].kings.keys) {
+                    if (user?.uid == i) {
+                        if (contentList!![p1].kings[i] ?: error(""))
+                            viewholder.card_view_detail_kingImg.setImageResource(R.drawable.on_king)
+                        else
+                            viewholder.card_view_detail_kingImg.setImageResource(R.drawable.not_king)
+                    }
             }
 
             viewholder.card_view_detail_contentView.text = contentList!![p1].content
