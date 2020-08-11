@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
@@ -54,14 +55,15 @@ class EditProfileActivity : AppCompatActivity() {
     private val filepath = null;
     private val REQUIRED_PERMISSIONS =
         arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    var imageUrl: String? = null
-    val user = Firebase.auth.currentUser
-    
+    private val user = Firebase.auth.currentUser
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit__profile)
+        storageReference = FirebaseStorage.getInstance().reference
+        //Toast.makeText(this, "${user?.uid}", Toast.LENGTH_SHORT).show()
 
         //val user = Firebase.auth.currentUser
         db.collection("users").document("${user?.uid}")
@@ -69,41 +71,38 @@ class EditProfileActivity : AppCompatActivity() {
             .addOnSuccessListener { result ->
                 edittextPersonName.setText("${result.data?.get("name")}")
                 editTextNickName.setText("${result.data?.get("nickName")}")
+                Glide.with(this).load("${result.data?.get("imageUrl")}").into(btnProfile1)
+
             }
             .addOnFailureListener { exception ->
                 //Log.w(TAG, "Error getting documents.", exception)
             }
         button.setOnClickListener {
             showDialog()
-            profile_button.setOnClickListener {
-
-                profile_button.setOnClickListener {
-
-                }
-            }
         }
         profile_button.setOnClickListener {
-            updateData()
+            Toast.makeText(this, "클릭", Toast.LENGTH_SHORT).show()
+            if (image_uri != null){
+                updateData(image_uri)
+            }
+            if(filePath != null){
+                updateData(filePath)
+            }
+            else{
+                updateData(null)
+            }
+
+            //updateData()
             //Toast.makeText(this, "${edittextPersonName}", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun updateData() {
-        db.collection("users").document("${user?.uid}")
-            .update("name", edittextPersonName.text.toString(),"nickName", editTextNickName.text.toString() )
-            .addOnSuccessListener { result ->
-                Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                //Log.w(TAG, "Error getting documents.", exception)
-                Toast.makeText(this, "실패", Toast.LENGTH_SHORT).show()
-            }
-
-        val db = FirebaseFirestore.getInstance()
+    fun testData(filepath:Uri?) {
+        Toast.makeText(this, "함수안에 도착", Toast.LENGTH_SHORT).show()
         if (filepath != null) {
-            val imageUrl = filepath
-            val ref = storageReference?.child("uploads/" + UUID.randomUUID().toString())
-            val uploadTask = ref?.putFile(filePath!!)
+            Toast.makeText(this, "업로드시작", Toast.LENGTH_SHORT).show()
+            val ref = storageReference?.child("profile/" + UUID.randomUUID().toString())
+            val uploadTask = ref?.putFile(filepath!!)
             val urlTask =
                 uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
                     if (!task.isSuccessful) {
@@ -115,19 +114,60 @@ class EditProfileActivity : AppCompatActivity() {
                 })?.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val downloadUri = task.result
-                        if (downloadUri != null) {
+                        Toast.makeText(this, "${downloadUri}", Toast.LENGTH_SHORT).show()
+                    }
+                    else{
+                        Toast.makeText(this, "업로드 실패", Toast.LENGTH_SHORT).show()
+                    }
+                }?.addOnFailureListener { exception ->
+                    Toast.makeText(this, "${exception.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
 
+
+    private fun updateData(filepath: Uri?) {
+        val db = FirebaseFirestore.getInstance()
+        if (filepath != null) {
+            val imageUrl = filepath
+            val ref = storageReference?.child("profile/" + UUID.randomUUID().toString())
+            val uploadTask = ref?.putFile(filepath!!)
+            val urlTask =
+                uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
+                        }
+                    }
+                    return@Continuation ref.downloadUrl
+                })?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val downloadUri = task.result
+                        if(downloadUri != null){
+                            Toast.makeText(this, "${downloadUri}", Toast.LENGTH_SHORT).show()
                             db.collection("users").document("${user?.uid}")
-                                .update("name", edittextPersonName ,"nickName", editTextNickName)
+                                .update("imageUrl", downloadUri.toString())
                                 .addOnSuccessListener {result ->
-                                    Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this, "업로드 성공", Toast.LENGTH_SHORT).show()
                                 }
                                 .addOnFailureListener { e ->
                                     //Log.w(TAG, "Error getting documents.", exception)
-                                    Toast.makeText(this, "실패", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this, "업로드 실패", Toast.LENGTH_SHORT).show()
                                 }
                         }
                     }
+                }
+        }
+        else{
+            db.collection("users").document("${user?.uid}")
+                .update("name", edittextPersonName.text.toString() ,
+                    "nickName", editTextNickName.text.toString())
+                .addOnSuccessListener {result ->
+                    Toast.makeText(this, "사용자 정보 성공", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e ->
+                    //Log.w(TAG, "Error getting documents.", exception)
+                    Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
     }
@@ -255,7 +295,8 @@ class EditProfileActivity : AppCompatActivity() {
             btnProfile1.setImageURI(image_uri)
         }
         if (requestCode == REQUEST_CODE_GET_IMAGE) {
-            btnProfile1.setImageURI(data?.data);
+            filePath = data?.data;
+            btnProfile1.setImageURI(filePath);
         }
     }
 }
