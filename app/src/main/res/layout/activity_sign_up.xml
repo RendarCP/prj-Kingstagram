@@ -10,11 +10,11 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/edit_name"
+            android:id="@+id/edit_email"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:hint="ID를 입력해주세요"
+            android:hint="이메일을 입력해주세요"
             android:inputType="text" />
 
         <EditText
@@ -39,10 +39,10 @@
             android:inputType="textPassword" />
 
         <EditText
-            android:id="@+id/edit_email"
+            android:id="@+id/edit_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="이메일을 입력해주세요" />
+            android:hint="이름을 입력해주세요" />
 
         <EditText
             android:id="@+id/edit_nickName"

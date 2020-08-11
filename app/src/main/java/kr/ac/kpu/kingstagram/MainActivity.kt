@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     var firestore: FirebaseFirestore? = null
     var toCameraUid: String = ""
     var toCameraNickName: String = ""
+    var toCameraEmail: String = ""
+    var toCamerapostNumber: Int = 0
     var toProfileImageUrl: String = ""
     var toProfilePostNumber = 0
     var toProfileFollower: ArrayList<String> = arrayListOf()
@@ -40,6 +42,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 //Toast.makeText(this.context,"${result.data?.get("name")}",Toast.LENGTH_LONG)
                 toCameraUid = "${user?.uid}"
                 toCameraNickName = "${result.data?.get("nickName")}"
+                toCameraEmail = "${result.data?.get("email")}"
+                //toCamerapostNumber = "${result.data?.get("postNumber")}" as Int
                 /*toProfileImageUrl = "${result.data?.get("imageUrl")}"
                 toProfilePostNumber = result.data?.get("postNumber") as Int
                 toProfileFollower = result.data?.get("follower") as ArrayList<String>
@@ -71,6 +75,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 var intent = Intent(this,CameraActivity::class.java)
                 intent.putExtra("uid", toCameraUid)
                 intent.putExtra("nickName",toCameraNickName)
+                intent.putExtra("email", toCameraEmail)
                 startActivity(intent)
             }
             R.id.action_profile -> {

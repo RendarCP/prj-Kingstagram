@@ -55,6 +55,7 @@ class CameraActivity : AppCompatActivity() {
     private val PERMISSION_CODE = 1001;
     private val filepath = null;
     var image_uri: Uri? = null;
+    private lateinit var firebaseAuth: FirebaseAuth
     private val REQUIRED_PERMISSIONS =
         arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
@@ -64,8 +65,7 @@ class CameraActivity : AppCompatActivity() {
 
         firebaseStore = FirebaseStorage.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
-        val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-        val db = FirebaseFirestore.getInstance()
+
         // 사진촬영
         take_photo.setOnClickListener {
             val values = ContentValues()
@@ -155,7 +155,12 @@ class CameraActivity : AppCompatActivity() {
 
     fun savePost(filepath:Uri?){
         Toast.makeText(this, "버튼 클릭됨", Toast.LENGTH_SHORT).show()
+        val matchRegex = Regex("(#[0-9a-zA-Z가-힣]*)")
+        val matchResult = matchRegex.findAll(editTag.text.toString())
+        val names = matchResult.map { it.groupValues[1] }.joinToString()
         val db = FirebaseFirestore.getInstance()
+        var nickName = intent.getStringExtra("nickName")
+        var email = intent.getStringExtra("email")
         if(filepath != null){
             loading()
             val imageUrl = filepath
@@ -174,16 +179,17 @@ class CameraActivity : AppCompatActivity() {
                     //Toast.makeText(this, "${downloadUri}", Toast.LENGTH_SHORT).show()
                     if(downloadUri != null){
                         val post = PostSchema(editContents.text.toString(), arrayListOf(editTag.text.toString()), 0,
-                            "${Firebase.auth?.currentUser}", "", HashMap() ,"${downloadUri}", Timestamp(Date()), HashMap())
+                            "${Firebase.auth?.currentUser?.uid}", "${nickName}", HashMap() ,"${downloadUri}", Timestamp(Date()), HashMap())
                         db.collection("posts")
                             .add(post)
                             .addOnSuccessListener {
-                                Toast.makeText(this, "db성공", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "업로드 성공", Toast.LENGTH_SHORT).show()
+                                db.collection("users").document("${email}")
                                 val intent= Intent(this,MainActivity::class.java)
                                 startActivity(intent);
                             }
                             .addOnFailureListener {
-                                Toast.makeText(this, "db실패", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "업로드 실패", Toast.LENGTH_SHORT).show()
                             }
                     }
                 } else {

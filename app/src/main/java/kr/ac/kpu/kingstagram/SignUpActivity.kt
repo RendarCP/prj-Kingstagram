@@ -77,7 +77,7 @@ class SignUpActivity : AppCompatActivity() {
 
         val user = user("${uid}", useremail, username, userNickname, postnumber, imageUrl,
             follower, following)
-        db.collection("users").add(user)
+        db.collection("users").document("${uid}").set(user)
             .addOnSuccessListener {
                 Toast.makeText(this, "db성공", Toast.LENGTH_SHORT).show()
             }
@@ -91,7 +91,7 @@ class SignUpActivity : AppCompatActivity() {
         val email: String? = null,
         val name: String? = null,
         val nickName: String? = null,
-        val password: Int = 0,
+        val postNumber: Int = 0,
         val imageUrl: String? = null,
         val follower: ArrayList<String>,
         val following: ArrayList<String>

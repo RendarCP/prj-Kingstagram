@@ -80,13 +80,12 @@
                 android:layout_height="wrap_content"
                 android:text="태그" />
 
-            <EditText
+            <com.hendraanggrian.appcompat.widget.SocialEditText
                 android:id="@+id/editTag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="태그를 입력해주세요"
-                android:inputType="textPersonName" />
+                app:socialFlags="hashtag|mention"
+                app:hashtagColor="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/btnSave"
