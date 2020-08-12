@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.activity_search_profile.*
 import kotlinx.android.synthetic.main.activity_search_profile.account_tv_follower_count
 import kotlinx.android.synthetic.main.activity_search_profile.account_tv_following_count
 import kotlinx.android.synthetic.main.activity_search_profile.account_tv_post_count
-import kotlinx.android.synthetic.main.activity_user.*
 import kotlinx.android.synthetic.main.cardview_user.view.*
 import kotlinx.android.synthetic.main.fragment_user.view.*
 

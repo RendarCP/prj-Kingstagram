@@ -7,30 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.auth.User
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.activity_comments.*
-import kotlinx.android.synthetic.main.activity_edit__profile.*
-import kotlinx.android.synthetic.main.activity_user.*
-import kotlinx.android.synthetic.main.activity_user.view.*
-import kotlinx.android.synthetic.main.activity_user.view.btnProfile
 import kotlinx.android.synthetic.main.cardview_user.view.*
-import kotlinx.android.synthetic.main.fragment_detail.view.*
+import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.android.synthetic.main.fragment_user.view.*
-import kotlinx.android.synthetic.main.view_comments.view.*
-import kotlinx.android.synthetic.main.view_search.view.*
-import kr.ac.kpu.kingstagram.*
+import kr.ac.kpu.kingstagram.EditProfileActivity
+import kr.ac.kpu.kingstagram.LoginActivity
+import kr.ac.kpu.kingstagram.R
+
 
 class UserFragment : Fragment() {
     var fragmentView: View? = null
@@ -63,7 +56,7 @@ class UserFragment : Fragment() {
         db.collection("posts").whereEqualTo("uid", "${user?.uid}")
             .get()
             .addOnSuccessListener { result ->
-                account_tv_post_count.setText("${result.documents.size}")
+                account_tv_post_count.text = "${result.documents.size}"
                 //Toast.makeText(this.context, "${result.documents.size}", Toast.LENGTH_LONG).show()
             }
             .addOnFailureListener { e ->
@@ -93,10 +86,26 @@ class UserFragment : Fragment() {
             startActivity(intent)
         }
 
-        view.btnProfile.setOnClickListener {
+       /*view.btnProfile.setOnClickListener {
+           fun onClick(v: View) {
+               Log.i("Debug", "Click en el boton")
+               val intent = Intent(this.context, EditProfileActivity::class.java)
+               startActivity(intent)
+           }
+       }*/
+
+         view.btnProfile.setOnClickListener {
             val intent = Intent(this.context, EditProfileActivity::class.java)
             startActivity(intent)
         }
+        /*
+        view.btnProfile.setOnClickListener {
+            Toast.makeText(
+                activity,
+                "active",
+                Toast.LENGTH_SHORT
+            ).show()
+        }*/
         return view
     }
 
