@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.util.Linkify
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -52,6 +53,7 @@ class LoginActivity : AppCompatActivity() {
         }
         var intent = Intent(this,SignUpActivity::class.java)
         content_signUp.setOnClickListener {
+            //content_signUp.paintFlags
             startActivity(intent)
         }
 

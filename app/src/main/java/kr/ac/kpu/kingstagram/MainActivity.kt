@@ -38,17 +38,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         db.collection("users").document("${user?.uid}")
             .get()
             .addOnSuccessListener { result ->
-                //if (result.id == "name") {
-                //Toast.makeText(this.context,"${result.data?.get("name")}",Toast.LENGTH_LONG)
                 toCameraUid = "${user?.uid}"
                 toCameraNickName = "${result.data?.get("nickName")}"
                 toCameraEmail = "${result.data?.get("email")}"
-                //toCamerapostNumber = "${result.data?.get("postNumber")}" as Int
-                /*toProfileImageUrl = "${result.data?.get("imageUrl")}"
-                toProfilePostNumber = result.data?.get("postNumber") as Int
-                toProfileFollower = result.data?.get("follower") as ArrayList<String>
-                toProfileFollowing = result.data?.get("following") as ArrayList<String>*/
-
 
                 //Log.w("TAG", "${result}")
             }

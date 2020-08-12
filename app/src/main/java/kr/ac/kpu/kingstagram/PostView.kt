@@ -18,28 +18,25 @@ class PostView() {
     var userId: String
 
     init{
-        this.comments = comments
         this.content = ""
         this.imageUrl = ""
         this.like = 0
-        this.kings = kings
         this.date = Timestamp(Date())
         this.uid = ""
         this.userId = ""
     }
     constructor(comments: Map<String, String>?, content: String, image: String, like: Int, kings: Map<String, Boolean>?, tag: ArrayList<String>?, timestamp: Timestamp, uid: String, userId: String) : this() {
         if (comments != null) {
-            this.comments.plus(comments)
+            this.comments = comments
         }
         this.content =content
         this.imageUrl = image
         if (kings != null) {
-            this.kings.plus(kings)
+            this.kings = kings
         }
         this.like = like
         if (tag != null) {
-            for (i in tag)
-            this.tag.add(i)
+            this.tag = tag
         }
         this.date = timestamp
         this.uid = uid

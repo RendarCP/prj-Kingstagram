@@ -1,12 +1,14 @@
 package kr.ac.kpu.kingstagram.navigation
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,14 +18,14 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.cardview_detail.*
+import com.hendraanggrian.appcompat.widget.SocialView
 import kotlinx.android.synthetic.main.cardview_detail.view.*
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 import kr.ac.kpu.kingstagram.CommentsActivity
 import kr.ac.kpu.kingstagram.PostView
 import kr.ac.kpu.kingstagram.R
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
+
 
 class DetailViewFragment : Fragment() {
     var firestore: FirebaseFirestore? = null
@@ -98,6 +100,7 @@ class DetailViewFragment : Fragment() {
             return contentList.size
         }
 
+        @SuppressLint("ResourceAsColor")
         @RequiresApi(Build.VERSION_CODES.O)
         override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
             var viewholder = (p0 as CustomViewHolder).itemView
@@ -127,6 +130,13 @@ class DetailViewFragment : Fragment() {
 
             viewholder.card_view_detail_commentsView.text =
                 "${contentList!![p1].comments.size} 개의 댓글 모두 보기"
+
+            for (i in contentList!![p1].tag) {
+                val textView = TextView(activity)
+                textView.text = "#$i"
+                textView.setTextColor(Color.parseColor("#FCCA3A"))
+                viewholder.card_view_detail_tagLayout.addView(textView)
+            }
 
             viewholder.card_view_detail_commentsView.setOnClickListener {
                 println("${contentUidList!![p1]}")
