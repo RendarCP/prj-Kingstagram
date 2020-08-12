@@ -161,6 +161,7 @@ class CameraActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         var nickName = intent.getStringExtra("nickName")
         var email = intent.getStringExtra("email")
+        var uid = intent.getStringExtra("uid")
         if(filepath != null){
             loading()
             val imageUrl = filepath
@@ -179,7 +180,7 @@ class CameraActivity : AppCompatActivity() {
                     //Toast.makeText(this, "${downloadUri}", Toast.LENGTH_SHORT).show()
                     if(downloadUri != null){
                         val post = PostSchema(editContents.text.toString(), arrayListOf(editTag.text.toString()), 0,
-                            "${Firebase.auth?.currentUser?.uid}", "${nickName}", HashMap() ,"${downloadUri}", Timestamp(Date()), HashMap())
+                            "${uid}", "${nickName}", HashMap() ,"${downloadUri}", Timestamp(Date()), HashMap())
                         db.collection("posts")
                             .add(post)
                             .addOnSuccessListener {

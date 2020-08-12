@@ -71,7 +71,7 @@ class EditProfileActivity : AppCompatActivity() {
             .addOnSuccessListener { result ->
                 edittextPersonName.setText("${result.data?.get("name")}")
                 editTextNickName.setText("${result.data?.get("nickName")}")
-                Glide.with(this).load("${result.data?.get("imageUrl")}").into(btnProfile1)
+                Glide.with(this).load("${result.data?.get("imageUrl")}").into(profile_image)
 
             }
             .addOnFailureListener { exception ->
@@ -238,7 +238,7 @@ class EditProfileActivity : AppCompatActivity() {
                     }
 
                     2 -> {
-                        btnProfile1.setImageResource(0)
+                        profile_image.setImageResource(0)
 
                     }
                 }
@@ -292,11 +292,11 @@ class EditProfileActivity : AppCompatActivity() {
         //called when image was captured from camera intent
         if (resultCode == Activity.RESULT_OK) {
             //set image captured to image view
-            btnProfile1.setImageURI(image_uri)
+            profile_image.setImageURI(image_uri)
         }
         if (requestCode == REQUEST_CODE_GET_IMAGE) {
             filePath = data?.data;
-            btnProfile1.setImageURI(filePath);
+            profile_image.setImageURI(filePath);
         }
     }
 }

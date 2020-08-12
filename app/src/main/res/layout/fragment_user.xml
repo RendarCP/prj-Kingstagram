@@ -19,6 +19,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:contentDescription="TODO"
+            android:background="@drawable/roundcorner"
             android:src="@drawable/account_iv_profile" />
 
         <Button
@@ -115,3 +116,4 @@
         android:layout_marginTop="16dp"
         />
 </LinearLayout>
+

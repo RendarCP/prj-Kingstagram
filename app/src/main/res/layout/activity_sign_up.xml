@@ -105,9 +105,4 @@
         android:layout_height="wrap_content"
         android:text="개인정보로 가입하기" />
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/GoogleSignIn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
 </LinearLayout>
