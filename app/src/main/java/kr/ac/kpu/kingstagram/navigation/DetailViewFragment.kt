@@ -116,9 +116,9 @@ class DetailViewFragment : Fragment() {
                 for (i in contentList!![p1].kings.keys) {
                     if (user?.uid == i) {
                         if (contentList!![p1].kings[i] ?: error(""))
-                            viewholder.card_view_detail_kingImg.setImageResource(R.drawable.on_king)
+                            viewholder.card_view_detail_kingImg.setImageResource(R.drawable.kingking)
                         else
-                            viewholder.card_view_detail_kingImg.setImageResource(R.drawable.not_king)
+                            viewholder.card_view_detail_kingImg.setImageResource(R.drawable.no_king)
                     }
             }
 
@@ -143,6 +143,8 @@ class DetailViewFragment : Fragment() {
                 var intent = Intent(context, CommentsActivity::class.java)
                 intent.putExtra("userId", contentList!![p1].userId)
                 intent.putExtra("content", contentList!![p1].content)
+                intent.putExtra("date", dateForm.format(contentList!![p1].date.toDate()))
+                intent.putExtra("tag", contentList!![p1].tag)
                 intent.putExtra("uid", contentUidList!![p1])
                 //intent.putExtra("comments", contentList!![p1].comments as HashMap<String, String>)
                 startActivity(intent)

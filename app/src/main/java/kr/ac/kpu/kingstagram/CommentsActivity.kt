@@ -1,11 +1,13 @@
 package kr.ac.kpu.kingstagram
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,6 +18,7 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_comments.*
 import kotlinx.android.synthetic.main.activity_search_profile.*
+import kotlinx.android.synthetic.main.cardview_detail.view.*
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 import kotlinx.android.synthetic.main.view_comments.*
 import kotlinx.android.synthetic.main.view_comments.view.*
@@ -34,6 +37,8 @@ class CommentsActivity : AppCompatActivity() {
         postUid = intent.getStringExtra("uid")
         var userId = intent.getStringExtra("userId")
         var content = intent.getStringExtra("content")
+        var date = intent.getStringExtra("date")
+        var tag = intent.getStringArrayListExtra("tag")
         //comments = intent.getSerializableExtra("comments") as HashMap<String, String>?
 
         firestore = FirebaseFirestore.getInstance()
@@ -42,6 +47,13 @@ class CommentsActivity : AppCompatActivity() {
 
         comments_view_detail_titleView.text = "$userId"
         comments_view_detail_contentView.text = "$content"
+        comments_view_detail_timeView.text = "$date"
+        for (i in tag) {
+            val textView = TextView(this)
+            textView.text = "#$i"
+            textView.setTextColor(Color.parseColor("#FCCA3A"))
+            comments_view_detail_tagLayout.addView(textView)
+        }
 
         var nickname = ""
         db.collection("users").document("${user?.uid}")

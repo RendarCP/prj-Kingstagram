@@ -29,13 +29,14 @@
         android:text="내용"
          />
 
-    <TextView
-        android:id="@+id/comments_view_detail_tagView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/comments_view_detail_tagLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="해시태그"
-         />
+        android:orientation="horizontal">
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/comments_view_detail_timeView"

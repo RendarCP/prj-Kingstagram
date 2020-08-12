@@ -85,27 +85,10 @@ class UserFragment : Fragment() {
             val intent = Intent(this.context,LoginActivity::class.java)
             startActivity(intent)
         }
-
-       /*view.btnProfile.setOnClickListener {
-           fun onClick(v: View) {
-               Log.i("Debug", "Click en el boton")
-               val intent = Intent(this.context, EditProfileActivity::class.java)
-               startActivity(intent)
-           }
-       }*/
-
          view.btnProfile.setOnClickListener {
             val intent = Intent(this.context, EditProfileActivity::class.java)
             startActivity(intent)
         }
-        /*
-        view.btnProfile.setOnClickListener {
-            Toast.makeText(
-                activity,
-                "active",
-                Toast.LENGTH_SHORT
-            ).show()
-        }*/
         return view
     }
 

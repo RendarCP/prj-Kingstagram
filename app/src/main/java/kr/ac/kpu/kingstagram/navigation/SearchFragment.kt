@@ -104,18 +104,21 @@ class SearchFragment : Fragment() {
         var contentUidList: ArrayList<String> = arrayListOf()
 
         init {
+            val user = Firebase.auth.currentUser
             firestore?.collection("users")
                 ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     contentList.clear()
                     contentUidList.clear()
                     for (snapshot in querySnapshot!!.documents) {
-                        val imgUrl: String = snapshot.data?.get("imageUrl") as String
-                        val name: String = snapshot.data?.get("name") as String
-                        val nickname: String = snapshot.data?.get("nickName") as String
-                        if (text != "") {
-                            if (nickname.contains(text)) {
-                                contentList.add(SearchView(imgUrl, nickname, name))
-                                contentUidList.add(snapshot.id)
+                        if(snapshot.id != user?.uid) {
+                            val imgUrl: String = snapshot.data?.get("imageUrl") as String
+                            val name: String = snapshot.data?.get("name") as String
+                            val nickname: String = snapshot.data?.get("nickName") as String
+                            if (text != "") {
+                                if (nickname.contains(text)) {
+                                    contentList.add(SearchView(imgUrl, nickname, name))
+                                    contentUidList.add(snapshot.id)
+                                }
                             }
                         }
                     }

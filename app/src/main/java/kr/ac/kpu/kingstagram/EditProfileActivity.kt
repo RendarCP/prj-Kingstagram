@@ -97,6 +97,7 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
+
     fun testData(filepath:Uri?) {
         Toast.makeText(this, "함수안에 도착", Toast.LENGTH_SHORT).show()
         if (filepath != null) {
@@ -124,6 +125,8 @@ class EditProfileActivity : AppCompatActivity() {
                 }
         }
     }
+
+
 
 
     private fun updateData(filepath: Uri?) {
