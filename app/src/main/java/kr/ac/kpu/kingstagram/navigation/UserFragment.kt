@@ -30,10 +30,7 @@ import kotlinx.android.synthetic.main.fragment_detail.view.*
 import kotlinx.android.synthetic.main.fragment_user.view.*
 import kotlinx.android.synthetic.main.view_comments.view.*
 import kotlinx.android.synthetic.main.view_search.view.*
-import kr.ac.kpu.kingstagram.CommentView
-import kr.ac.kpu.kingstagram.EditProfileActivity
-import kr.ac.kpu.kingstagram.PostView
-import kr.ac.kpu.kingstagram.R
+import kr.ac.kpu.kingstagram.*
 
 class UserFragment : Fragment() {
     var fragmentView: View? = null
@@ -77,22 +74,26 @@ class UserFragment : Fragment() {
 
         firestore = FirebaseFirestore.getInstance()
         var layoutManager = view.recycleView_profile.layoutManager
-        layoutManager  = GridLayoutManager(activity,8 )
-        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                when (position % 8) {
-                    0, 1, 2 -> return 2
-
-                }
-                return 2
-            }
-        }
+        layoutManager  = GridLayoutManager(activity,4 )
+//        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+//            override fun getSpanSize(position: Int): Int {
+//                when (position % 8) {
+//                    0, 1, 2 -> return 2
+//                    3,4 -> return 3
+//                }
+//                return 2
+//            }
+//        }
         view.recycleView_profile.layoutManager = layoutManager
         view.recycleView_profile.adapter = ProfileViewAdapter()
 
+        view.btn_signout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(this.context,LoginActivity::class.java)
+            startActivity(intent)
+        }
 
-
-                view.btnProfile.setOnClickListener {
+        view.btnProfile.setOnClickListener {
             val intent = Intent(this.context, EditProfileActivity::class.java)
             startActivity(intent)
         }
