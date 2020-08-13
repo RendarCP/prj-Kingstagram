@@ -39,7 +39,7 @@ import java.util.*
 class EditProfileActivity : AppCompatActivity() {
     private val PERMISSION_CODE = 1000
     private val IMAGE_CAPTURE_CODE = 1001
-    var image_uri: Uri? = null
+    private var image_uri: Uri? = null
     val REQUEST_CODE_GET_IMAGE = 101
     private lateinit var database: DatabaseReference
     var db = FirebaseFirestore.getInstance()
@@ -71,7 +71,13 @@ class EditProfileActivity : AppCompatActivity() {
             .addOnSuccessListener { result ->
                 edittextPersonName.setText("${result.data?.get("name")}")
                 editTextNickName.setText("${result.data?.get("nickName")}")
-                Glide.with(this).load("${result.data?.get("imageUrl")}").into(profile_image)
+                if(result.data?.get("imageUrl") != ""){
+                    Glide.with(this).load("${result.data?.get("imageUrl")}").into(profile_image)
+                }
+                else{
+                    profile_image.setImageResource(R.drawable.account_iv_profile)
+                }
+                //Glide.with(this).load("${result.data?.get("imageUrl")}").into(profile_image)
 
             }
             .addOnFailureListener { exception ->
@@ -91,9 +97,6 @@ class EditProfileActivity : AppCompatActivity() {
             else{
                 updateData(null)
             }
-
-            //updateData()
-            //Toast.makeText(this, "${edittextPersonName}", Toast.LENGTH_SHORT).show()
         }
     }
 
