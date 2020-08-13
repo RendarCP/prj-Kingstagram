@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
 import com.hendraanggrian.appcompat.widget.SocialView
@@ -69,7 +70,7 @@ class DetailViewFragment : Fragment() {
         var contentUidList: ArrayList<String> = arrayListOf()
 
         init {
-            firestore?.collection("posts")
+            firestore?.collection("posts")?.orderBy("date", Query.Direction.DESCENDING)
                 ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     contentList.clear()
                     contentUidList.clear()
@@ -121,6 +122,14 @@ class DetailViewFragment : Fragment() {
                             viewholder.card_view_detail_kingImg.setImageResource(R.drawable.no_king)
                     }
             }
+            for (i in contentList!![p1].unkings.keys) {
+                if (user?.uid == i) {
+                    if (contentList!![p1].unkings[i] ?: error(""))
+                        viewholder.card_view_detail_sad_kingImg.setImageResource(R.drawable.sad_king)
+                    else
+                        viewholder.card_view_detail_sad_kingImg.setImageResource(R.drawable.happy_king)
+                }
+            }
 
             viewholder.card_view_detail_contentView.text = contentList!![p1].content
 
@@ -131,13 +140,15 @@ class DetailViewFragment : Fragment() {
             viewholder.card_view_detail_commentsView.text =
                 "${contentList!![p1].comments.size} 개의 댓글 모두 보기"
 
+            viewholder.card_view_detail_tagLayout.removeAllViews()
             for (i in contentList!![p1].tag) {
                 val textView = TextView(activity)
-                textView.text = "#$i"
+                textView.text = "$i"
                 textView.setTextColor(Color.parseColor("#FCCA3A"))
                 viewholder.card_view_detail_tagLayout.addView(textView)
             }
 
+            // detail comments activity button listener
             viewholder.card_view_detail_commentsView.setOnClickListener {
                 println("${contentUidList!![p1]}")
                 var intent = Intent(context, CommentsActivity::class.java)
@@ -150,6 +161,7 @@ class DetailViewFragment : Fragment() {
                 startActivity(intent)
 
             }
+            // kings button listener
             viewholder.card_view_detail_kingImg.setOnClickListener {
                 var count = 0
                 for (i in contentList!![p1].kings.keys) {
@@ -180,7 +192,38 @@ class DetailViewFragment : Fragment() {
                     db.collection("posts").document("${contentUidList!![p1]}")
                         .set(data, SetOptions.merge())
                 }
-
+            }
+            // sad kings button listener
+            viewholder.card_view_detail_sad_kingImg.setOnClickListener {
+                var count = 0
+                for (i in contentList!![p1].unkings.keys) {
+                    if (user?.uid == i) {
+                        count++
+                        if (contentList!![p1].unkings[i] ?: error("")) {
+                            val data = hashMapOf(
+                                "unkings" to mapOf("${user?.uid}" to false),
+                                "unlike" to contentList!![p1].unlike - 1
+                            )
+                            db.collection("posts").document("${contentUidList!![p1]}")
+                                .set(data, SetOptions.merge())
+                        } else {
+                            val data = hashMapOf(
+                                "unkings" to mapOf("${user?.uid}" to true),
+                                "unlike" to contentList!![p1].unlike + 1
+                            )
+                            db.collection("posts").document("${contentUidList!![p1]}")
+                                .set(data, SetOptions.merge())
+                        }
+                    }
+                }
+                if (count == 0) {
+                    val data = hashMapOf(
+                        "unkings" to mapOf("${user?.uid}" to true),
+                        "unlike" to contentList!![p1].unlike + 1
+                    )
+                    db.collection("posts").document("${contentUidList!![p1]}")
+                        .set(data, SetOptions.merge())
+                }
             }
 
 

@@ -140,13 +140,14 @@ class CameraActivity : AppCompatActivity() {
         }
     }
     data class PostSchema(
-        val contents: String? = null,
+        val content: String? = null,
         val tag: ArrayList<String> = arrayListOf(),
         val like: Int = 0,
+        val unlike: Int = 0,
         val uid: String? = null,
         val userId: String? = null,
         val kings: Map<String, Boolean>,
-        //val kings: String? = null,
+        val unkings: Map<String, Boolean>,
         val imageUrl: String? = null,
         val date: Timestamp ,
         val comments: Map<String, String>
@@ -166,7 +167,7 @@ class CameraActivity : AppCompatActivity() {
             loading()
             val imageUrl = filepath
             val ref = storageReference?.child("uploads/" + UUID.randomUUID().toString())
-            val uploadTask = ref?.putFile(filePath!!)
+            val uploadTask = ref?.putFile(filepath!!)
             val urlTask = uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
@@ -177,10 +178,14 @@ class CameraActivity : AppCompatActivity() {
             })?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val downloadUri = task.result
+                    val tagList = editTag.text.toString().split("#")
+                    var tagArray = arrayListOf<String>()
+                    for (i in tagArray)
+                        tagArray.add(i)
                     //Toast.makeText(this, "${downloadUri}", Toast.LENGTH_SHORT).show()
                     if(downloadUri != null){
-                        val post = PostSchema(editContents.text.toString(), arrayListOf(editTag.text.toString()), 0,
-                            "${uid}", "${nickName}", HashMap() ,"${downloadUri}", Timestamp(Date()), HashMap())
+                        val post = PostSchema(editContents.text.toString(), tagArray, 0, 0,
+                            "${uid}", "${nickName}", HashMap(), HashMap(),"${downloadUri}", Timestamp(Date()), HashMap())
                         db.collection("posts")
                             .add(post)
                             .addOnSuccessListener {

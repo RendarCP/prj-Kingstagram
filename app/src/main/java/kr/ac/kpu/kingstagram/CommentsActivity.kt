@@ -1,5 +1,6 @@
 package kr.ac.kpu.kingstagram
 
+import android.app.ProgressDialog
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -50,7 +51,7 @@ class CommentsActivity : AppCompatActivity() {
         comments_view_detail_timeView.text = "$date"
         for (i in tag) {
             val textView = TextView(this)
-            textView.text = "#$i"
+            textView.text = "$i"
             textView.setTextColor(Color.parseColor("#FCCA3A"))
             comments_view_detail_tagLayout.addView(textView)
         }
@@ -89,17 +90,21 @@ class CommentsActivity : AppCompatActivity() {
         var contentUidList: ArrayList<String> = arrayListOf()
 
         init {
+            val db = FirebaseFirestore.getInstance()
+
             firestore?.collection("posts")//?.document("$postUid")?.collection("comments")
                 ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     contentList.clear()
                     contentUidList.clear()
                     //Log.d("MyTag","${querySnapshot!!.documents}")
                     //println(querySnapshot.documents.toString())
+
                     for (snapshot in querySnapshot!!.documents) {
-                        Log.w("Comment TAG"," ${snapshot?.id}")
-                        if(snapshot?.id == postUid){
-                            var commentsMap: HashMap<String, String> = snapshot.data?.get("comments") as HashMap<String, String>
-                            for (i in commentsMap.keys){
+                        Log.w("Comment TAG", " ${snapshot?.id}")
+                        if (snapshot?.id == postUid) {
+                            var commentsMap: HashMap<String, String> =
+                                snapshot.data?.get("comments") as HashMap<String, String>
+                            for (i in commentsMap.keys) {
                                 contentList.add(CommentView(i, commentsMap.getValue(i)))
                                 contentUidList.add(i)
                             }
@@ -125,8 +130,8 @@ class CommentsActivity : AppCompatActivity() {
         override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
             var viewholder = (p0 as CustomViewHolder).itemView
             val db = FirebaseFirestore.getInstance()
-
-
+            //loading()
+            //viewholder.nickname_comments.text = contentList!![p1].nickname
             viewholder.content_comments.text = contentList!![p1].comments
 
             db.collection("users").document("${contentUidList!![p1]}")
@@ -134,11 +139,12 @@ class CommentsActivity : AppCompatActivity() {
                 .addOnSuccessListener { result ->
                     viewholder.nickname_comments.text = result.data?.get("nickName") as String
 
-                        //Toast.makeText(this.context,"${result.data?.get("name")}",Toast.LENGTH_LONG)
-                        if (result.data?.get("imageUrl") != "") {
-                            Glide.with(p0.itemView.context).load(result.data?.get("imageUrl") as String)
-                                .into(viewholder.img_comments)
-                        }
+                    //Toast.makeText(this.context,"${result.data?.get("name")}",Toast.LENGTH_LONG)
+                    if (result.data?.get("imageUrl") != "") {
+                        Glide.with(p0.itemView.context)
+                            .load(result.data?.get("imageUrl") as String)
+                            .into(viewholder.img_comments)
+                    }
 
 
                     //Log.w("TAG", "${result}")
@@ -146,9 +152,15 @@ class CommentsActivity : AppCompatActivity() {
                 .addOnFailureListener { exception ->
                     //Log.w(TAG, "Error getting documents.", exception)
                 }
-
         }
 
+    }
+
+    fun loading() {
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Kingstagram")
+        progressDialog.setMessage("업로드중입니다..")
+        progressDialog.show()
     }
 
 }

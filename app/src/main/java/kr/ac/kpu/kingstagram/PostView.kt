@@ -11,7 +11,9 @@ class PostView() {
     var content: String
     var imageUrl: String
     var like: Int
+    var unlike: Int
     var kings: Map<String, Boolean> = HashMap()
+    var unkings: Map<String, Boolean> = HashMap()
     var tag: ArrayList<String> = arrayListOf()
     var date: Timestamp
     var uid : String
@@ -21,11 +23,12 @@ class PostView() {
         this.content = ""
         this.imageUrl = ""
         this.like = 0
+        this.unlike = 0
         this.date = Timestamp(Date())
         this.uid = ""
         this.userId = ""
     }
-    constructor(comments: Map<String, String>?, content: String, image: String, like: Int, kings: Map<String, Boolean>?, tag: ArrayList<String>?, timestamp: Timestamp, uid: String, userId: String) : this() {
+    constructor(comments: Map<String, String>?, content: String, image: String, like: Int, unlike: Int, kings: Map<String, Boolean>?, unkings: Map<String, Boolean>?, tag: ArrayList<String>?, timestamp: Timestamp, uid: String, userId: String) : this() {
         if (comments != null) {
             this.comments = comments
         }
@@ -34,7 +37,11 @@ class PostView() {
         if (kings != null) {
             this.kings = kings
         }
+        if (unkings != null) {
+            this.unkings = unkings
+        }
         this.like = like
+        this.unlike = unlike
         if (tag != null) {
             this.tag = tag
         }
