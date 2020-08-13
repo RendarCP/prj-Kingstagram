@@ -27,6 +27,7 @@ class SignUpActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
+
         Enjoy.setOnClickListener {
             var password = edit_password.text.toString()
             var checkPassword = edit_checkPassword.text.toString()

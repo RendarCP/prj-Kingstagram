@@ -60,23 +60,40 @@
             android:gravity="center"
             android:text="사진변경" />
 
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:text="이름" />
+
         <EditText
             android:id="@+id/edittextPersonName"
             android:layout_width="374dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_marginTop="24dp"
             android:layout_marginBottom="20dp"
+            android:padding="5dp"
+            android:background="@drawable/main_edittext"
             android:ems="10"
             android:inputType="textPersonName"
             android:textSize="24sp"
             android:visibility="visible" />
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:text="닉네임" />
 
         <EditText
             android:id="@+id/editTextNickName"
             android:layout_width="373dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
+            android:padding="5dp"
+            android:background="@drawable/main_edittext"
             android:ems="10"
             android:inputType="textPersonName"
             android:textSize="24sp" />

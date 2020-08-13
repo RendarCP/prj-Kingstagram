@@ -92,6 +92,32 @@ class UserFragment : Fragment() {
         return view
     }
 
+    override fun onStart() {
+        super.onStart()
+        db.collection("users").document("${user?.uid}")
+            .get()
+            .addOnSuccessListener { result ->
+                var follower = result.data?.get("follower") as ArrayList<String>
+                var following = result.data?.get("following") as ArrayList<String>
+                account_tv_follower_count.text = "${follower.size}"
+                account_tv_following_count.text = "${following.size}"
+                Glide.with(this).load("${result.data?.get("imageUrl")}").into(btnProfile)
+            }
+            .addOnFailureListener { exception ->
+                //Toast.makeText(this.context, "데이터실패", Toast.LENGTH_SHORT).show()
+                //Log.w(TAG, "Error getting documents.", exception)
+            }
+        db.collection("posts").whereEqualTo("uid", "${user?.uid}")
+            .get()
+            .addOnSuccessListener { result ->
+                account_tv_post_count.text = "${result.documents.size}"
+                //Toast.makeText(this.context, "${result.documents.size}", Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener { e ->
+                //Toast.makeText(this.context, "${e.message}", Toast.LENGTH_LONG).show()
+            }
+    }
+
     inner class ProfileViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         var contentList: java.util.ArrayList<ProfileView> = arrayListOf()
         var contentUidList: java.util.ArrayList<String> = arrayListOf()

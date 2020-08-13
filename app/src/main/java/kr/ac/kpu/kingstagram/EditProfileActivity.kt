@@ -81,7 +81,7 @@ class EditProfileActivity : AppCompatActivity() {
             showDialog()
         }
         profile_button.setOnClickListener {
-            Toast.makeText(this, "클릭", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "클릭", Toast.LENGTH_SHORT).show()
             if (image_uri != null){
                 updateData(image_uri)
             }
@@ -97,40 +97,16 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
-
-    fun testData(filepath:Uri?) {
-        Toast.makeText(this, "함수안에 도착", Toast.LENGTH_SHORT).show()
-        if (filepath != null) {
-            Toast.makeText(this, "업로드시작", Toast.LENGTH_SHORT).show()
-            val ref = storageReference?.child("profile/" + UUID.randomUUID().toString())
-            val uploadTask = ref?.putFile(filepath!!)
-            val urlTask =
-                uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
-                    if (!task.isSuccessful) {
-                        task.exception?.let {
-                            throw it
-                        }
-                    }
-                    return@Continuation ref.downloadUrl
-                })?.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val downloadUri = task.result
-                        Toast.makeText(this, "${downloadUri}", Toast.LENGTH_SHORT).show()
-                    }
-                    else{
-                        Toast.makeText(this, "업로드 실패", Toast.LENGTH_SHORT).show()
-                    }
-                }?.addOnFailureListener { exception ->
-                    Toast.makeText(this, "${exception.message}", Toast.LENGTH_SHORT).show()
-                }
-        }
+    fun loading() {
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Kingstagram")
+        progressDialog.setMessage("프로필 수정중입니다.")
+        progressDialog.show()
     }
-
-
-
 
     private fun updateData(filepath: Uri?) {
         val db = FirebaseFirestore.getInstance()
+        loading()
         if (filepath != null) {
             val imageUrl = filepath
             val ref = storageReference?.child("profile/" + UUID.randomUUID().toString())
@@ -147,11 +123,12 @@ class EditProfileActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         val downloadUri = task.result
                         if(downloadUri != null){
-                            Toast.makeText(this, "${downloadUri}", Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(this, "${downloadUri}", Toast.LENGTH_SHORT).show()
                             db.collection("users").document("${user?.uid}")
                                 .update("imageUrl", downloadUri.toString())
                                 .addOnSuccessListener {result ->
-                                    Toast.makeText(this, "업로드 성공", Toast.LENGTH_SHORT).show()
+                                    //Toast.makeText(this, "업로드 성공", Toast.LENGTH_SHORT).show()
+                                    finish()
                                 }
                                 .addOnFailureListener { e ->
                                     //Log.w(TAG, "Error getting documents.", exception)
@@ -166,7 +143,8 @@ class EditProfileActivity : AppCompatActivity() {
                 .update("name", edittextPersonName.text.toString() ,
                     "nickName", editTextNickName.text.toString())
                 .addOnSuccessListener {result ->
-                    Toast.makeText(this, "사용자 정보 성공", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "사용자 정보 성공", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
                 .addOnFailureListener { e ->
                     //Log.w(TAG, "Error getting documents.", exception)
