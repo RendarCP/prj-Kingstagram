@@ -28,30 +28,39 @@ class LoginActivity : AppCompatActivity() {
         mContext = this
 
         login_btn.setOnClickListener {
+            et_id.setBackgroundResource(R.drawable.main_edittext)
+            et_pw.setBackgroundResource(R.drawable.main_edittext)
+            tv_error_id.text = ""
             val email = et_id.text.toString()
             val password = et_pw.text.toString()
 
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d("login" , "signInWithEmail:success")
-                        //Toast.makeText(baseContext, "Authentication success.", Toast.LENGTH_SHORT).show()
-                        val user = auth.currentUser
-                        updateUI(user)
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w("login", "signInWithEmail:failure", task.exception)
-                        //Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
-                        updateFail(null)
+            if (email == "" || password == "") {
+                et_id.setBackgroundResource(R.drawable.red_edittext)
+                et_pw.setBackgroundResource(R.drawable.red_edittext)
+                tv_error_id.text = "아이디 및 비밀번호를 입력해주세요"
+            } else {
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("login", "signInWithEmail:success")
+                            //Toast.makeText(baseContext, "Authentication success.", Toast.LENGTH_SHORT).show()
+                            val user = auth.currentUser
+                            updateUI(user)
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("login", "signInWithEmail:failure", task.exception)
+                            //Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                            updateFail(null)
+                            // ...
+                        }
+
                         // ...
                     }
 
-                    // ...
-                }
-
+            }
         }
-        var intent = Intent(this,SignUpActivity::class.java)
+        var intent = Intent(this, SignUpActivity::class.java)
         content_signUp.setOnClickListener {
             //content_signUp.paintFlags
             startActivity(intent)
@@ -67,15 +76,15 @@ class LoginActivity : AppCompatActivity() {
         //updateUI(currentUser)
     }
 
-    fun updateUI(user: FirebaseUser?){
-        val intent= Intent(this,MainActivity::class.java)
-        intent.putExtra("user",user)
+    fun updateUI(user: FirebaseUser?) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("user", user)
         startActivity(intent)
     }
 
     fun updateFail(nothing: Nothing?) {
         et_id.setBackgroundResource(R.drawable.red_edittext)
         et_pw.setBackgroundResource(R.drawable.red_edittext)
-        tv_error_id.text="아이디 및 비밀번호를 확인해주세요"
+        tv_error_id.text = "아이디 및 비밀번호를 확인해주세요"
     }
 }
