@@ -19,6 +19,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:layout_gravity="center"
+            android:paddingLeft="10dp"
             android:background="@drawable/main_edittext"
             android:hint="이메일을 입력해주세요"
             android:inputType="text" />
@@ -37,6 +38,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:layout_gravity="center"
+            android:paddingLeft="10dp"
             android:background="@drawable/main_edittext"
             android:hint="패스워드를 입력해주세요"
             android:inputType="textPassword" />
@@ -55,6 +57,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:paddingLeft="10dp"
             android:background="@drawable/main_edittext"
             android:hint="패스워드를 다시 입력해주세요"
             android:inputType="textPassword" />
@@ -72,6 +75,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:paddingLeft="10dp"
             android:background="@drawable/main_edittext"
             android:hint="이름을 입력해주세요" />
 
@@ -88,6 +92,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:paddingLeft="10dp"
             android:background="@drawable/main_edittext"
             android:hint="닉네임을 입력해주세요" />
 

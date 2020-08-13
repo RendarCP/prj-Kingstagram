@@ -1,5 +1,6 @@
 package kr.ac.kpu.kingstagram
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -28,6 +29,11 @@ class LoginActivity : AppCompatActivity() {
         mContext = this
 
         login_btn.setOnClickListener {
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setTitle("Kingstagram")
+            progressDialog.setMessage("Loading...")
+            progressDialog.show()
+
             et_id.setBackgroundResource(R.drawable.main_edittext)
             et_pw.setBackgroundResource(R.drawable.main_edittext)
             tv_error_id.text = ""
@@ -37,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
             if (email == "" || password == "") {
                 et_id.setBackgroundResource(R.drawable.red_edittext)
                 et_pw.setBackgroundResource(R.drawable.red_edittext)
+                progressDialog.dismiss()
                 tv_error_id.text = "아이디 및 비밀번호를 입력해주세요"
             } else {
                 auth.signInWithEmailAndPassword(email, password)
@@ -51,6 +58,7 @@ class LoginActivity : AppCompatActivity() {
                             // If sign in fails, display a message to the user.
                             Log.w("login", "signInWithEmail:failure", task.exception)
                             //Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                            progressDialog.dismiss()
                             updateFail(null)
                             // ...
                         }
@@ -87,4 +95,5 @@ class LoginActivity : AppCompatActivity() {
         et_pw.setBackgroundResource(R.drawable.red_edittext)
         tv_error_id.text = "아이디 및 비밀번호를 확인해주세요"
     }
+
 }

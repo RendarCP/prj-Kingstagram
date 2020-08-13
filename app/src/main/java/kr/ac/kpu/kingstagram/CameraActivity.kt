@@ -189,17 +189,17 @@ class CameraActivity : AppCompatActivity() {
                         db.collection("posts")
                             .add(post)
                             .addOnSuccessListener {
-                                Toast.makeText(this, "업로드 성공", Toast.LENGTH_SHORT).show()
+                                //Toast.makeText(this, "업로드 성공", Toast.LENGTH_SHORT).show()
                                 db.collection("users").document("${email}")
                                 val intent= Intent(this,MainActivity::class.java)
                                 startActivity(intent);
                             }
                             .addOnFailureListener {
-                                Toast.makeText(this, "업로드 실패", Toast.LENGTH_SHORT).show()
+                                //Toast.makeText(this, "업로드 실패", Toast.LENGTH_SHORT).show()
                             }
                     }
                 } else {
-                    Toast.makeText(this, "업로드 실패", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "업로드 실패", Toast.LENGTH_SHORT).show()
                 }
             }?.addOnFailureListener{
 

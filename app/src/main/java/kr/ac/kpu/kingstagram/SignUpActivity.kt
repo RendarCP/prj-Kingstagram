@@ -1,5 +1,6 @@
 package kr.ac.kpu.kingstagram
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -29,6 +30,11 @@ class SignUpActivity : AppCompatActivity() {
 
 
         Enjoy.setOnClickListener {
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setTitle("Kingstagram")
+            progressDialog.setMessage("Loading...")
+            progressDialog.show()
+
             var password = edit_password.text.toString()
             var checkPassword = edit_checkPassword.text.toString()
             var nickName = edit_nickName.text.toString()
@@ -57,7 +63,8 @@ class SignUpActivity : AppCompatActivity() {
                     edit_email.setBackgroundResource(R.drawable.red_edittext)
                 if(TextUtils.isEmpty(name))
                     edit_name.setBackgroundResource(R.drawable.red_edittext)
-                errorText.text = "정보를 올바르게 입력해주세요."
+                progressDialog.dismiss()
+                errorText.text = "정보를 올바르게 입력해주세요"
                 //Toast.makeText(this, "정보를 올바르게 입력해주세요. ", Toast.LENGTH_SHORT).show()
 
             }
@@ -68,7 +75,8 @@ class SignUpActivity : AppCompatActivity() {
                     .addOnSuccessListener { result ->
                         for (document in result) {
                             if (document.data["nickName"] == nickName){
-                                errorText.text = "이미 존재하는 닉네임입니다."
+                                progressDialog.dismiss()
+                                errorText.text = "이미 존재하는 닉네임입니다"
                                 edit_nickName.setBackgroundResource(R.drawable.red_edittext)
                                 nickNameTrigger = false
                             }
@@ -81,7 +89,7 @@ class SignUpActivity : AppCompatActivity() {
                                     if (task.isSuccessful) {
                                         val userUid = auth.currentUser?.uid.toString()
                                         saveData(userUid)
-                                        Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this, "회원가입 되셨습니다.", Toast.LENGTH_SHORT).show()
                                         val intent = Intent(this, LoginActivity::class.java)
                                         startActivity(intent)
 
@@ -89,7 +97,8 @@ class SignUpActivity : AppCompatActivity() {
 
                                 }
                                 .addOnFailureListener { exception ->
-                                    errorText.text = "이미 존재하는 이메일입니다."
+                                    progressDialog.dismiss()
+                                    errorText.text = "이미 존재하는 이메일입니다"
                                     edit_email.setBackgroundResource(R.drawable.red_edittext)
                                     //Toast.makeText(this, "이미 존재하는 이메일입니다.", Toast.LENGTH_LONG).show()
                                 }
@@ -99,7 +108,8 @@ class SignUpActivity : AppCompatActivity() {
                        // Log.d(TAG, "Error getting documents: ", exception)
                     }
             } else {
-                errorText.text = "비밀번호가 틀립니다."
+                progressDialog.dismiss()
+                errorText.text = "비밀번호가 틀립니다"
                 edit_checkPassword.setBackgroundResource(R.drawable.red_edittext)
                 //Toast.makeText(this, "비밀번호가 틀립니다", Toast.LENGTH_SHORT).show()
             }
@@ -120,10 +130,10 @@ class SignUpActivity : AppCompatActivity() {
             follower, following)
         db.collection("users").document("${uid}").set(user)
             .addOnSuccessListener {
-                Toast.makeText(this, "db성공", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "db성공", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
-                Toast.makeText(this, "db실패", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "db실패", Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -137,4 +147,11 @@ class SignUpActivity : AppCompatActivity() {
         val follower: ArrayList<String>,
         val following: ArrayList<String>
     )
+
+    fun loading() {
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Kingstagram")
+        progressDialog.setMessage("업로드중입니다..")
+        progressDialog.show()
+    }
 }

@@ -47,7 +47,10 @@ class UserFragment : Fragment() {
                 var following = result.data?.get("following") as ArrayList<String>
                 account_tv_follower_count.text = "${follower.size}"
                 account_tv_following_count.text = "${following.size}"
-                Glide.with(this).load("${result.data?.get("imageUrl")}").into(btnProfile)
+                if (result.data?.get("imageUrl") != "")
+                    Glide.with(this).load("${result.data?.get("imageUrl")}").into(btnProfile)
+                else
+                    btnProfile.setImageResource(R.drawable.account_iv_profile)
             }
             .addOnFailureListener { exception ->
                 //Toast.makeText(this.context, "데이터실패", Toast.LENGTH_SHORT).show()
@@ -101,7 +104,10 @@ class UserFragment : Fragment() {
                 var following = result.data?.get("following") as ArrayList<String>
                 account_tv_follower_count.text = "${follower.size}"
                 account_tv_following_count.text = "${following.size}"
-                Glide.with(this).load("${result.data?.get("imageUrl")}").into(btnProfile)
+                if (result.data?.get("imageUrl") != "")
+                    Glide.with(this).load("${result.data?.get("imageUrl")}").into(btnProfile)
+                else
+                    btnProfile.setImageResource(R.drawable.account_iv_profile)
             }
             .addOnFailureListener { exception ->
                 //Toast.makeText(this.context, "데이터실패", Toast.LENGTH_SHORT).show()
