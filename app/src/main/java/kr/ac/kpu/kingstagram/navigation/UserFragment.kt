@@ -85,8 +85,9 @@ class UserFragment : Fragment() {
 
         view.btn_signout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            val intent = Intent(this.context,LoginActivity::class.java)
-            startActivity(intent)
+            activity?.finish()
+            //val intent = Intent(this.context,LoginActivity::class.java)
+            //startActivity(intent)
         }
          view.btnProfile.setOnClickListener {
             val intent = Intent(this.context, EditProfileActivity::class.java)

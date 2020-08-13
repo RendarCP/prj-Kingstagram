@@ -89,9 +89,11 @@ class SignUpActivity : AppCompatActivity() {
                                     if (task.isSuccessful) {
                                         val userUid = auth.currentUser?.uid.toString()
                                         saveData(userUid)
+                                        progressDialog.dismiss()
                                         Toast.makeText(this, "회원가입 되셨습니다.", Toast.LENGTH_SHORT).show()
-                                        val intent = Intent(this, LoginActivity::class.java)
-                                        startActivity(intent)
+                                        finish()
+                                        //val intent = Intent(this, LoginActivity::class.java)
+                                        //startActivity(intent)
 
                                     }
 

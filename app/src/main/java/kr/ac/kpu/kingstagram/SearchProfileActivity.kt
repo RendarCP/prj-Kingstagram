@@ -62,7 +62,7 @@ class SearchProfileActivity : AppCompatActivity() {
                 val following: ArrayList<String> =
                     result.data?.get("following") as ArrayList<String>
                 account_tv_following_count.text = "${following.size}"
-                name_profile.text = "${result.data?.get("name")}"
+                name_profile.text = "${result.data?.get("nickName")}"
 
                 for (i in follower) {
                     if (i == user?.uid)

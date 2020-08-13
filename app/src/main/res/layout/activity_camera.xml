@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <FrameLayout
                 android:id="@+id/cameraPreview"
@@ -23,24 +23,27 @@
 
                 <ImageView
                     android:id="@+id/previewTest"
-                    android:src="@drawable/kingstagram_title"
                     android:layout_width="match_parent"
-                    android:layout_height="450dp" />
+                    android:layout_height="450dp"
+                    android:src="@drawable/kingstagram_title" />
             </FrameLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/take_photo"
                     android:layout_width="57dp"
                     android:layout_height="47dp"
-                    android:layout_marginStart="104dp"
+                    android:layout_marginStart="108dp"
+                    android:layout_marginEnd="16dp"
                     android:background="@color/colorPrimary"
                     android:src="@android:drawable/ic_menu_camera"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/take_gallery"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.4" />
@@ -48,13 +51,14 @@
                 <Button
                     android:id="@+id/take_gallery"
                     android:layout_width="84dp"
-                    android:layout_height="48dp"
+                    android:layout_height="47dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginEnd="108dp"
-                    android:layout_marginBottom="3dp"
                     android:background="@color/colorPrimary"
                     android:text="갤러리"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/take_photo"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="1.0" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -63,8 +67,8 @@
                 android:id="@+id/contentsText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000000"
-                android:text="내용" />
+                android:text="내용"
+                android:textColor="#000000" />
 
             <EditText
                 android:id="@+id/editContents"
@@ -74,33 +78,37 @@
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="내용을 입력해주세요"
+                android:inputType="textMultiLine"
                 android:lines="4"
-                android:inputType="textMultiLine" />
+                android:paddingStart="5dp"
+                android:paddingTop="5dp" />
 
             <TextView
                 android:id="@+id/tagText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000000"
-                android:text="태그" />
+                android:text="태그"
+                android:textColor="#000000" />
 
             <com.hendraanggrian.appcompat.widget.SocialEditText
-            android:id="@+id/editTag"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@drawable/main_edittext"
-            app:socialFlags="hashtag|mention"
-            app:hashtagColor="@color/colorPrimary" />
+                android:id="@+id/editTag"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/main_edittext"
+                android:lines="1"
+                android:singleLine="true"
+                app:hashtagColor="@color/colorPrimary"
+                app:socialFlags="hashtag|mention" />
 
             <Button
                 android:id="@+id/btnSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textColor="#ffffff"
-                android:background="@color/colorPrimary"
                 android:layout_marginBottom="10dp"
-                android:text="저장" />
+                android:background="@color/colorPrimary"
+                android:text="저장"
+                android:textColor="#000000" />
         </LinearLayout>
 
     </ScrollView>

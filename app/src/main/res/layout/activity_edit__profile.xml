@@ -42,7 +42,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="120dp"
             android:layout_marginBottom="20dp"
             android:layout_width="200dp"
             android:layout_height="200dp"
@@ -69,7 +69,10 @@
 
         <EditText
             android:id="@+id/edittextPersonName"
-            android:layout_width="374dp"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
@@ -89,7 +92,10 @@
 
         <EditText
             android:id="@+id/editTextNickName"
-            android:layout_width="373dp"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:padding="5dp"
@@ -103,10 +109,9 @@
             android:layout_width="241dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginTop="16dp"
             android:background="#FCCA3A"
-            android:text="프로필수정" />
+            android:text="프로필 수정" />
 
     </LinearLayout>
 

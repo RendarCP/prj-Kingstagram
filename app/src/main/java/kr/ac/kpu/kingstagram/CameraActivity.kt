@@ -155,7 +155,7 @@ class CameraActivity : AppCompatActivity() {
     )
 
     fun savePost(filepath:Uri?){
-        Toast.makeText(this, "버튼 클릭됨", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "버튼 클릭됨", Toast.LENGTH_SHORT).show()
         val matchRegex = Regex("(#[0-9a-zA-Z가-힣]*)")
         val matchResult = matchRegex.findAll(editTag.text.toString())
         val names = matchResult.map { it.groupValues[1] }.joinToString()
@@ -178,10 +178,10 @@ class CameraActivity : AppCompatActivity() {
             })?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val downloadUri = task.result
-                    val tagList = editTag.text.toString().split("#")
+                    val tagList = editTag.text.toString().split("#").drop(1)
                     var tagArray = arrayListOf<String>()
-                    for (i in tagArray)
-                        tagArray.add(i)
+                    for (i in tagList)
+                        tagArray.add("#$i")
                     //Toast.makeText(this, "${downloadUri}", Toast.LENGTH_SHORT).show()
                     if(downloadUri != null){
                         val post = PostSchema(editContents.text.toString(), tagArray, 0, 0,
@@ -191,8 +191,9 @@ class CameraActivity : AppCompatActivity() {
                             .addOnSuccessListener {
                                 //Toast.makeText(this, "업로드 성공", Toast.LENGTH_SHORT).show()
                                 db.collection("users").document("${email}")
-                                val intent= Intent(this,MainActivity::class.java)
-                                startActivity(intent);
+                                finish()
+                                //val intent= Intent(this,MainActivity::class.java)
+                                //startActivity(intent);
                             }
                             .addOnFailureListener {
                                 //Toast.makeText(this, "업로드 실패", Toast.LENGTH_SHORT).show()

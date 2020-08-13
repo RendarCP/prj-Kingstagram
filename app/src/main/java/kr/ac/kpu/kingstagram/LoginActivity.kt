@@ -25,6 +25,11 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        val pref = this.getPreferences(0)
+        val editor = pref.edit()
+
+        et_id.setText(pref.getString("NameKey", ""))
+
         auth = Firebase.auth
         mContext = this
 
@@ -34,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
             progressDialog.setMessage("Loading...")
             progressDialog.show()
 
+            editor.putString("NameKey", et_id.text.toString()).apply()
             et_id.setBackgroundResource(R.drawable.main_edittext)
             et_pw.setBackgroundResource(R.drawable.main_edittext)
             tv_error_id.text = ""
@@ -53,6 +59,7 @@ class LoginActivity : AppCompatActivity() {
                             Log.d("login", "signInWithEmail:success")
                             //Toast.makeText(baseContext, "Authentication success.", Toast.LENGTH_SHORT).show()
                             val user = auth.currentUser
+                            progressDialog.dismiss()
                             updateUI(user)
                         } else {
                             // If sign in fails, display a message to the user.
