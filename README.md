@@ -15,3 +15,9 @@ Skill
 3. git/github
 4. trello
 5. sourcetree
+
+Library 
+----------------------------
+1. Glide <https://github.com/bumptech/glide>
+2. socialView <https://github.com/hendraanggrian/socialview>
+3. circleimageview <https://github.com/hdodenhof/CircleImageView>
