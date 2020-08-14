@@ -24,6 +24,7 @@ Library
 
 ScreenShot
 ---------------------------------
+<img src="https://user-images.githubusercontent.com/32770277/90212634-d31d5c00-de2e-11ea-9dac-7943f36c9459.jpeg" width="450px" height="300px" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
 ![KakaoTalk_Photo_2020-08-14-13-04-25](https://user-images.githubusercontent.com/32770277/90212634-d31d5c00-de2e-11ea-9dac-7943f36c9459.jpeg)
 ![KakaoTalk_Photo_2020-08-14-13-04-30](https://user-images.githubusercontent.com/32770277/90212632-d31d5c00-de2e-11ea-836b-e5ac3eea81df.jpeg)
 ![KakaoTalk_Photo_2020-08-14-13-04-33](https://user-images.githubusercontent.com/32770277/90212630-d284c580-de2e-11ea-9d19-299032fd1167.jpeg)
